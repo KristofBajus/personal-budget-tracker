@@ -10,5 +10,6 @@ namespace DAL.Entities
         public string Name { get; set; } = null!;
         [MaxLength(7)]
         public string Color { get; set; } = null!;
+        public bool IsGlobal { get; set; }
     }
 }

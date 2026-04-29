@@ -17,9 +17,9 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Food", Color = "#FF6B6B" },
-                new Category { Id = 2, Name = "Transport", Color = "#4ECDC4" },
-                new Category { Id = 3, Name = "Entertainment", Color = "#45B7D1" }
+                new Category { Id = 1, Name = "Food", Color = "#FF6B6B", IsGlobal = true },
+                new Category { Id = 2, Name = "Transport", Color = "#4ECDC4", IsGlobal = true },
+                new Category { Id = 3, Name = "Entertainment", Color = "#45B7D1", IsGlobal = true }
             );
         }
     }

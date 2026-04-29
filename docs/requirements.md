@@ -26,6 +26,7 @@
   - Income: Salary, Freelance, Gift, Allowance, Other
   - Expense: Food, Housing, Transport, Health, Entertainment, Shopping, Other
 - User can create custom categories for both income and expenses
+- User can only edit and delete their own custom categories — global (pre-seeded) categories are read-only for all users
 - User can edit a custom category name — a confirmation warning is shown since it affects existing transactions
 - User can delete a custom category only if no transactions reference it — otherwise a blocking message is shown
 - Category deletion is a soft delete
