@@ -8,6 +8,7 @@ Left-side Shell flyout (visible after login):
 - Categories
 - Statistics
 - Admin *(visible only to admin role)*
+- Profile
 - Logout button at bottom
 
 Login and Register pages are shown before the Shell — user cannot access the flyout without being authenticated.
@@ -176,3 +177,26 @@ Login and Register pages are shown before the Shell — user cannot access the f
 - Delete shows confirmation dialog, then soft-deletes — row stays visible with Deleted badge
 - Admin cannot delete themselves
 - Admin cannot see transaction data of other users
+
+---
+
+## 9. Profile Page
+
+**Route:** Profile in sidebar
+
+**Layout:** Single centered card with user info and editable sections.
+
+**Elements:**
+- Username display (editable)
+- Email display (editable)
+- Joined date (read-only)
+- Save profile button
+- Separator
+- Change password section: Current password, New password, Confirm new password fields
+- Change password button
+
+**Behavior:**
+- Save profile validates username uniqueness (excluding soft-deleted accounts)
+- Change password requires correct current password before accepting the new one
+- Success/error messages shown inline after each action
+- Only the logged-in user can edit their own profile — no admin access to other profiles

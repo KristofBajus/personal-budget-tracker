@@ -45,6 +45,12 @@
 - User can export their transactions to a CSV file
 - User can import transactions from a CSV file
 
+### Profile
+- User can view their own profile (username, email, joined date)
+- User can edit their username and email
+- User can change their password (requires current password confirmation)
+- Only the logged-in user can edit their own profile
+
 ### Admin Panel
 - Admin can view a list of all users (including banned and soft-deleted) with status badges
 - Admin can ban a user
