@@ -7,11 +7,11 @@ namespace Project.Models.Services
 {
     public class CategoryService
     {
-        public async Task<List<CategoryDTO>> GetCategoriesAsync()
+        public async Task<List<CategoryDto>> GetCategoriesAsync()
         {
             using var db = new AppDbContext();
             return await db.Categories
-                .Select(c => new CategoryDTO
+                .Select(c => new CategoryDto
                 {
                     Id = c.Id,
                     Name = c.Name,

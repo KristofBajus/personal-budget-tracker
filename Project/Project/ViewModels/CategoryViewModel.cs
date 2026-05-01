@@ -15,11 +15,11 @@ namespace Project.ViewModels
         [RelayCommand]
         private async Task Load(object obj)
         {
-            Categories = new ObservableCollection<CategoryDTO>(await _categoryService.GetCategoriesAsync());
+            Categories = new ObservableCollection<CategoryDto>(await _categoryService.GetCategoriesAsync());
         }
 
         [ObservableProperty]
-        public partial ObservableCollection<CategoryDTO> Categories { get; set; } = [];
+        public partial ObservableCollection<CategoryDto> Categories { get; set; } = [];
 
         public CategoryViewModel()
         {

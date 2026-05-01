@@ -1,13 +1,13 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+using DAL.Enums;
 
-namespace Project.Models.Entities
+namespace Project.Models.Entities;
+
+public class CategoryDto
 {
-    public partial class CategoryDTO : ObservableObject
-    {
-        public int Id { get; set; }
-        [ObservableProperty]
-        public partial string Name { get; set; }
-        [ObservableProperty]
-        public partial string Color { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Color { get; set; } = null!;
+    public TransactionType Type { get; set; }
+    public bool IsGlobal { get; set; }
+    public int? UserId { get; set; }
 }
