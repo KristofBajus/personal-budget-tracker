@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DAL;
+using Microsoft.EntityFrameworkCore;
 using Project.Models.Entities;
 using Project.Models.Services;
 using System.Collections.ObjectModel;
@@ -23,7 +24,7 @@ namespace Project.ViewModels
         public CategoryViewModel()
         {
             using var db = new AppDbContext();
-            db.Database.EnsureCreated();
+            db.Database.Migrate();
         }
     }
 }

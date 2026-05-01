@@ -3,7 +3,8 @@
 ## Functional Requirements
 
 ### Authentication
-- User can register with username, email, and password
+- User can register with username, email, password, and a currency selection
+- Currency is chosen from a predefined list (EUR, USD, CZK, GBP, CHF) during registration and cannot be changed afterward
 - Password is never stored in plain text — hashed with BCrypt
 - After successful registration, user is automatically logged in
 - User can log in and log out
@@ -47,9 +48,10 @@
 - User can import transactions from a CSV file
 
 ### Profile
-- User can view their own profile (username, email, joined date)
+- User can view their own profile (username, email, currency, joined date)
 - User can edit their username and email
 - User can change their password (requires current password confirmation)
+- Currency is read-only in the profile — it cannot be changed after registration
 - Only the logged-in user can edit their own profile
 
 ### Admin Panel
