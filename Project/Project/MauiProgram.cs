@@ -1,7 +1,13 @@
+using System;
+using System.IO;
 using CommunityToolkit.Maui;
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Maui.Hosting;
 using Project.Models.Services;
 using Project.Models.Services.Interfaces;
 using Project.ViewModels;
@@ -45,16 +51,24 @@ public static class MauiProgram
 
         // ViewModels
         builder.Services.AddTransient<CategoryViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
 
         // Pages
         builder.Services.AddTransient<CategoryView>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
         var app = builder.Build();
+        
+        //route page
+        Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
 
+        
         // Run DB migration once on startup
         using var scope = app.Services.CreateScope();
         scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
