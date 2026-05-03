@@ -1,3 +1,5 @@
+using System;
+
 namespace Project.Models.Entities;
 
 public class BalancePointDto

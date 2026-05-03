@@ -1,4 +1,8 @@
-﻿namespace Project;
+﻿using System;
+using Microsoft.Maui.Accessibility;
+using Microsoft.Maui.Controls;
+
+namespace Project;
 
 public partial class MainPage : ContentPage
 {

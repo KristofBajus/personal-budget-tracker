@@ -1,4 +1,6 @@
-﻿namespace Project;
+﻿using Microsoft.Maui.Controls;
+
+namespace Project;
 
 public partial class AppShell : Shell
 {

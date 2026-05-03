@@ -1,3 +1,4 @@
+using System;
 using DAL.Enums;
 
 namespace Project.Models.Entities;
