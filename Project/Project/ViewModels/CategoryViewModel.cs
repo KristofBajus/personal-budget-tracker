@@ -1,31 +1,32 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DAL;
-using Microsoft.EntityFrameworkCore;
 using Project.Models.Entities;
 using Project.Models.Services;
+using Project.Models.Services.Interfaces;
 using System.Collections.ObjectModel;
 
-namespace Project.ViewModels
+namespace Project.ViewModels;
+
+public partial class CategoryViewModel : BaseViewModel
 {
-    public partial class CategoryViewModel : ObservableObject
+    private readonly ICategoryService _categoryService;
+    private readonly SessionService _session;
+
+    public CategoryViewModel(ICategoryService categoryService, SessionService session)
     {
-        private CategoryService _categoryService = new();
+        _categoryService = categoryService;
+        _session = session;
+    }
 
-        [RelayCommand]
-        private async Task Load(object obj)
-        {
-            Categories = new ObservableCollection<CategoryDto>(await _categoryService.GetCategoriesAsync());
-        }
+    [ObservableProperty]
+    public partial ObservableCollection<CategoryDto> Categories { get; set; } = [];
 
-        [ObservableProperty]
-        public partial ObservableCollection<CategoryDto> Categories { get; set; } = [];
-
-        public CategoryViewModel()
-        {
-            using var db = new AppDbContext();
-            db.Database.Migrate();
-        }
+    [RelayCommand]
+    private async Task LoadAsync()
+    {
+        IsBusy = true;
+        Categories = new ObservableCollection<CategoryDto>(
+            await _categoryService.GetAllAsync(_session.CurrentUser!.Id));
+        IsBusy = false;
     }
 }
-    
