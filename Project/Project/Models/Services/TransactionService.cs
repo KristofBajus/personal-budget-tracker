@@ -61,15 +61,89 @@ public class TransactionService : ITransactionService
             .SumAsync(t => (decimal?)t.Amount) ?? 0m;
     }
 
-    public Task<List<TransactionDto>> GetFilteredAsync(int userId, TransactionType? type = null, int? categoryId = null, int? month = null, int? year = null)
-        => throw new NotImplementedException();
+    public async Task<List<TransactionDto>> GetFilteredAsync(int userId, TransactionType? type = null, int? categoryId = null, int? month = null, int? year = null)
+    {
+        var query = _db.Transactions.Where(t => t.UserId == userId);
 
-    public Task<TransactionDto> AddAsync(int userId, decimal amount, DateTime date, TransactionType type, int categoryId, string? note)
-        => throw new NotImplementedException();
+        if (type is not null)
+            query = query.Where(t => t.Type == type);
 
-    public Task UpdateAsync(int id, decimal amount, DateTime date, TransactionType type, int categoryId, string? note)
-        => throw new NotImplementedException();
+        if (categoryId is not null)
+            query = query.Where(t => t.CategoryId == categoryId);
 
-    public Task DeleteAsync(int id)
-        => throw new NotImplementedException();
+        if (year is not null)
+            query = query.Where(t => t.Date.Year == year);
+
+        if (month is not null)
+            query = query.Where(t => t.Date.Month == month);
+
+        return await query
+            .OrderByDescending(t => t.Date)
+            .Select(t => new TransactionDto
+            {
+                Id = t.Id,
+                Amount = t.Amount,
+                Date = t.Date,
+                Type = t.Type,
+                Note = t.Note,
+                CategoryId = t.CategoryId,
+                CategoryName = t.Category.Name,
+                CategoryColor = t.Category.Color,
+                CreatedAt = t.CreatedAt
+            })
+            .ToListAsync();
+    }
+
+    public async Task<TransactionDto> AddAsync(int userId, decimal amount, DateTime date, TransactionType type, int categoryId, string? note)
+    {
+        var transaction = new DAL.Entities.Transaction
+        {
+            UserId = userId,
+            Amount = amount,
+            Date = date,
+            Type = type,
+            CategoryId = categoryId,
+            Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim(),
+            CreatedAt = DateTime.UtcNow
+        };
+        _db.Transactions.Add(transaction);
+        await _db.SaveChangesAsync();
+
+        var category = await _db.Categories.FindAsync(categoryId);
+        return new TransactionDto
+        {
+            Id = transaction.Id,
+            Amount = transaction.Amount,
+            Date = transaction.Date,
+            Type = transaction.Type,
+            Note = transaction.Note,
+            CategoryId = categoryId,
+            CategoryName = category!.Name,
+            CategoryColor = category.Color,
+            CreatedAt = transaction.CreatedAt
+        };
+    }
+
+    public async Task UpdateAsync(int id, decimal amount, DateTime date, TransactionType type, int categoryId, string? note)
+    {
+        var transaction = await _db.Transactions.FindAsync(id);
+        if (transaction is null) return;
+
+        transaction.Amount = amount;
+        transaction.Date = date;
+        transaction.Type = type;
+        transaction.CategoryId = categoryId;
+        transaction.Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim();
+        await _db.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var transaction = await _db.Transactions.FindAsync(id);
+        if (transaction is null) return;
+
+        transaction.IsDeleted = true;
+        transaction.DeletedAt = DateTime.UtcNow;
+        await _db.SaveChangesAsync();
+    }
 }

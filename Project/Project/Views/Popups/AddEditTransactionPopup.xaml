@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="Project.Views.Popups.AddEditTransactionPopup"
+               CanBeDismissedByTappingOutsideOfPopup="False">
+
+    <Border StrokeShape="RoundRectangle 16"
+            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+            WidthRequest="420"
+            Padding="28,24">
+
+        <VerticalStackLayout Spacing="16">
+
+            <!-- Title -->
+            <Label Text="{Binding PopupTitle}"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+
+            <!-- Type -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Type" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <Picker ItemsSource="{Binding TypeOptions}"
+                        SelectedItem="{Binding SelectedType}" />
+            </VerticalStackLayout>
+
+            <!-- Amount -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Amount" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <Entry Placeholder="0.00"
+                       Text="{Binding AmountText}"
+                       Keyboard="Numeric" />
+            </VerticalStackLayout>
+
+            <!-- Date -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Date" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <DatePicker Date="{Binding Date}"
+                            Format="dd MMM yyyy" />
+            </VerticalStackLayout>
+
+            <!-- Category -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Category" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <Picker ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory}"
+                        ItemDisplayBinding="{Binding Name}" />
+            </VerticalStackLayout>
+
+            <!-- Note -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Note (optional)" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <Entry Placeholder="Add a note..."
+                       Text="{Binding Note}"
+                       MaxLength="500" />
+            </VerticalStackLayout>
+
+            <!-- Error -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="{StaticResource ExpenseColor}"
+                   FontSize="13"
+                   IsVisible="{Binding HasError}" />
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Margin="0,4,0,0">
+                <Button Grid.Column="0"
+                        Text="Cancel"
+                        Clicked="OnCancelClicked"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource White}}" />
+                <Button Grid.Column="1"
+                        Text="Save"
+                        Command="{Binding SaveCommand}" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </Border>
+
+</toolkit:Popup>

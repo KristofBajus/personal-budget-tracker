@@ -52,6 +52,8 @@ public static class MauiProgram
         builder.Services.AddTransient<RegisterViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<CategoryViewModel>();
+        builder.Services.AddTransient<TransactionListViewModel>();
+        builder.Services.AddTransient<AddEditTransactionViewModel>();
 
         // Pages — auth flow
         builder.Services.AddTransient<LoginPage>();
