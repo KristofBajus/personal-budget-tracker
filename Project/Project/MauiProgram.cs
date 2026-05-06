@@ -5,7 +5,6 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
 using Project.Models.Services;
@@ -29,7 +28,6 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // Database — Transient so each service gets its own DbContext instance
         var dbPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "budget.db");
@@ -38,7 +36,7 @@ public static class MauiProgram
             contextLifetime: ServiceLifetime.Transient,
             optionsLifetime: ServiceLifetime.Singleton);
 
-        // Session — Singleton: one instance holds the logged-in user for the entire app lifetime
+        // Session — Singleton: holds the logged-in user for the entire app lifetime
         builder.Services.AddSingleton<SessionService>();
 
         // Services
@@ -50,26 +48,31 @@ public static class MauiProgram
         builder.Services.AddTransient<IProfileService, ProfileService>();
 
         // ViewModels
-        builder.Services.AddTransient<CategoryViewModel>();
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<DashboardViewModel>();
+        builder.Services.AddTransient<CategoryViewModel>();
 
-        // Pages
-        builder.Services.AddTransient<CategoryView>();
+        // Pages — auth flow
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
+
+        // Pages — main app
+        builder.Services.AddTransient<AppShell>();
+        builder.Services.AddTransient<DashboardPage>();
+        builder.Services.AddTransient<TransactionListPage>();
+        builder.Services.AddTransient<CategoryView>();
+        builder.Services.AddTransient<StatisticsPage>();
+        builder.Services.AddTransient<ProfilePage>();
+        builder.Services.AddTransient<AdminDashboardPage>();
+        builder.Services.AddTransient<UserManagementPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
 
         var app = builder.Build();
-        
-        //route page
-        Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
 
-        
-        // Run DB migration once on startup
         using var scope = app.Services.CreateScope();
         scope.ServiceProvider.GetRequiredService<AppDbContext>().Database.Migrate();
 

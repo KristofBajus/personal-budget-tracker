@@ -14,4 +14,7 @@ public class TransactionDto
     public string CategoryName { get; set; } = null!;
     public string CategoryColor { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
+
+    public bool IsIncome => Type == TransactionType.Income;
+    public string FormattedAmount => IsIncome ? $"+{Amount:N2}" : $"-{Amount:N2}";
 }

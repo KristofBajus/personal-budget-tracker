@@ -58,8 +58,7 @@ public partial class LoginViewModel : BaseViewModel
                 return;
             }
 
-            // Phase 7 will replace this with the proper auth gate navigation
-            Application.Current!.MainPage = new AppShell();
+            Application.Current!.MainPage = IPlatformApplication.Current!.Services.GetRequiredService<AppShell>();
         }
         catch (AccountBannedException)
         {

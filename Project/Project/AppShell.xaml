@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="Project.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:Project.Views"
-    Title="Project">
+<Shell x:Class="Project.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:Project.Views"
+       FlyoutWidth="240">
 
-    <ShellContent
-        Title="Categories"
-        ContentTemplate="{DataTemplate views:CategoryView}"
-        Route="Categories" />
+    <!-- Sidebar header: app name + logged-in username -->
+    <Shell.FlyoutHeader>
+        <Grid Padding="20,36,20,20"
+              BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray900}}">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Budget Tracker"
+                       FontSize="17"
+                       FontAttributes="Bold"
+                       TextColor="White" />
+                <Label Text="{Binding CurrentUsername, StringFormat='@{0}'}"
+                       FontSize="12"
+                       TextColor="#93C5FD" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Main navigation -->
+    <FlyoutItem Title="Dashboard">
+        <ShellContent Route="dashboard"
+                      ContentTemplate="{DataTemplate views:DashboardPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Transactions">
+        <ShellContent Route="transactions"
+                      ContentTemplate="{DataTemplate views:TransactionListPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Categories">
+        <ShellContent Route="categories"
+                      ContentTemplate="{DataTemplate views:CategoryView}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Statistics">
+        <ShellContent Route="statistics"
+                      ContentTemplate="{DataTemplate views:StatisticsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Profile">
+        <ShellContent Route="profile"
+                      ContentTemplate="{DataTemplate views:ProfilePage}" />
+    </FlyoutItem>
+
+    <!-- Admin-only items — hidden for regular users -->
+    <FlyoutItem Title="Admin Overview"
+                IsVisible="{Binding IsAdmin}">
+        <ShellContent Route="adminDashboard"
+                      ContentTemplate="{DataTemplate views:AdminDashboardPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="User Management"
+                IsVisible="{Binding IsAdmin}">
+        <ShellContent Route="userManagement"
+                      ContentTemplate="{DataTemplate views:UserManagementPage}" />
+    </FlyoutItem>
+
+    <!-- Sidebar footer: logout button -->
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="16,8,16,24">
+            <BoxView HeightRequest="1"
+                     Margin="0,0,0,8"
+                     BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+            <Button Text="Log Out"
+                    Clicked="OnLogoutClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource ExpenseColor}"
+                    HorizontalOptions="Start"
+                    Padding="0" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
 
 </Shell>

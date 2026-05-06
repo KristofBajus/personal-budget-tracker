@@ -96,7 +96,7 @@ public partial class RegisterViewModel : BaseViewModel
         try
         {
             await _authService.RegisterAsync(Username, Email, Password, SelectedCurrency);
-            Application.Current!.MainPage = new AppShell();
+            Application.Current!.MainPage = IPlatformApplication.Current!.Services.GetRequiredService<AppShell>();
         }
         catch (InvalidOperationException ex)
         {

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:Project.Converters"
+             x:Class="Project.Views.DashboardPage"
+             Title="Dashboard">
+
+    <ContentPage.Resources>
+        <converters:HexColorConverter x:Key="HexColor" />
+        <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmpty" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <!-- Balance card -->
+            <Border StrokeShape="RoundRectangle 14"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    Padding="24,20">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Total Balance"
+                           FontSize="13"
+                           TextColor="#DBEAFE" />
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="{Binding Balance, StringFormat='{0:N2}'}"
+                               FontSize="38"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label Text="{Binding Currency}"
+                               FontSize="18"
+                               TextColor="#DBEAFE"
+                               VerticalOptions="End"
+                               Margin="0,0,0,6" />
+                    </HorizontalStackLayout>
+                    <Label Text="{Binding Username, StringFormat='@{0}'}"
+                           FontSize="12"
+                           TextColor="#93C5FD" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Income / Expense cards -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 12"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Income"
+                               FontSize="12"
+                               TextColor="{StaticResource IncomeColor}"
+                               FontAttributes="Bold" />
+                        <Label Text="{Binding IncomeThisMonth, StringFormat='{0:N2}'}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="This month"
+                               FontSize="11"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 12"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Expenses"
+                               FontSize="12"
+                               TextColor="{StaticResource ExpenseColor}"
+                               FontAttributes="Bold" />
+                        <Label Text="{Binding ExpenseThisMonth, StringFormat='{0:N2}'}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="This month"
+                               FontSize="11"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!-- This vs last month comparison -->
+            <Border StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                    Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="This Month vs. Last Month"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    <Grid ColumnDefinitions="*, *">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="This month net"
+                                   FontSize="11"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                            <Label Text="{Binding NetThisMonth, StringFormat='{0:+#,##0.00;-#,##0.00;0.00}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Last month net"
+                                   FontSize="11"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                            <Label Text="{Binding NetLastMonth, StringFormat='{0:+#,##0.00;-#,##0.00;0.00}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Recent transactions -->
+            <Label Text="Recent Transactions"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   Margin="0,4,0,0" />
+
+            <Label Text="No transactions yet."
+                   FontSize="13"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                   HorizontalOptions="Center"
+                   Margin="0,8"
+                   IsVisible="{Binding HasNoRecentTransactions}" />
+
+            <CollectionView ItemsSource="{Binding RecentTransactions}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                                Padding="12,10"
+                                Margin="0,0,0,6">
+                            <Grid ColumnDefinitions="32, *, auto" ColumnSpacing="10">
+
+                                <!-- Category colour dot -->
+                                <BoxView Grid.Column="0"
+                                         WidthRequest="12"
+                                         HeightRequest="12"
+                                         CornerRadius="6"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Center"
+                                         Color="{Binding CategoryColor, Converter={StaticResource HexColor}}" />
+
+                                <!-- Category + note -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
+                                    <Label Text="{Binding CategoryName}"
+                                           FontSize="14"
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding Note}"
+                                           FontSize="11"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                                           IsVisible="{Binding Note, Converter={StaticResource IsStringNotNullOrEmpty}}" />
+                                </VerticalStackLayout>
+
+                                <!-- Amount + date -->
+                                <VerticalStackLayout Grid.Column="2" Spacing="1"
+                                                     VerticalOptions="Center"
+                                                     HorizontalOptions="End">
+                                    <Label Text="{Binding FormattedAmount}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           HorizontalOptions="End">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsIncome}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource IncomeColor}" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsIncome}" Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource ExpenseColor}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="{Binding Date, StringFormat='{0:dd MMM}'}"
+                                           FontSize="11"
+                                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                                           HorizontalOptions="End" />
+                                </VerticalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
