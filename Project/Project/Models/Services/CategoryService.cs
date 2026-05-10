@@ -76,4 +76,13 @@ public class CategoryService : ICategoryService
     {
         return await _db.Transactions.AnyAsync(t => t.CategoryId == id);
     }
+
+    public async Task<bool> NameExistsAsync(string name, int userId, int? excludeId = null)
+    {
+        return await _db.Categories
+            .Where(c => (c.IsGlobal || c.UserId == userId)
+                     && c.Name.ToLower() == name.ToLower()
+                     && (excludeId == null || c.Id != excludeId))
+            .AnyAsync();
+    }
 }

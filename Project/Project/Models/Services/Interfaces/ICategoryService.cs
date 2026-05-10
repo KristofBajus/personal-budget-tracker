@@ -12,4 +12,5 @@ public interface ICategoryService
     Task UpdateAsync(int id, string name, string color);
     Task DeleteAsync(int id);
     Task<bool> HasTransactionsAsync(int id);
+    Task<bool> NameExistsAsync(string name, int userId, int? excludeId = null);
 }
