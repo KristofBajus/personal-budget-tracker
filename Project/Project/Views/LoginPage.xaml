@@ -11,8 +11,8 @@
 
     <ScrollView>
         <VerticalStackLayout VerticalOptions="Center"
-                             HorizontalOptions="Center"
-                             WidthRequest="400"
+                             HorizontalOptions="Fill"
+                             MaximumWidthRequest="400"
                              Padding="20"
                              Spacing="0">
 
@@ -28,7 +28,7 @@
                    TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
                    Margin="0,0,0,32" />
 
-            <Border StrokeShape="RoundRectangle 12"
+            <Border StrokeShape="RoundRectangle 20"
                     Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
                     BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                     Padding="32">
@@ -42,17 +42,27 @@
                         <Label Text="Username"
                                FontSize="13"
                                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                        <Entry Placeholder="Enter your username"
-                               Text="{Binding Username}" />
+                        <Border StrokeShape="RoundRectangle 20"
+                                Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                                Padding="12,0">
+                            <Entry Placeholder="Enter your username"
+                                   Text="{Binding Username}"
+                                   BackgroundColor="Transparent" />
+                        </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Password"
                                FontSize="13"
                                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                        <Entry Placeholder="Enter your password"
-                               Text="{Binding Password}"
-                               IsPassword="True" />
+                        <Border StrokeShape="RoundRectangle 20"
+                                Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                                Padding="12,0">
+                            <Entry Placeholder="Enter your password"
+                                   Text="{Binding Password}"
+                                   IsPassword="True"
+                                   BackgroundColor="Transparent" />
+                        </Border>
                     </VerticalStackLayout>
 
                     <Label Text="{Binding ErrorMessage}"
@@ -65,6 +75,7 @@
                     <Button Text="Log In"
                             Command="{Binding LoginCommand}"
                             IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                            CornerRadius="20"
                             Margin="0,8,0,0" />
 
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">

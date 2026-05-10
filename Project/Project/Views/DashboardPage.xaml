@@ -15,7 +15,7 @@
         <VerticalStackLayout Padding="16" Spacing="12">
 
             <!-- Balance card -->
-            <Border StrokeShape="RoundRectangle 14"
+            <Border StrokeShape="RoundRectangle 20"
                     StrokeThickness="0"
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                     Padding="24,20">
@@ -44,7 +44,7 @@
             <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
 
                 <Border Grid.Column="0"
-                        StrokeShape="RoundRectangle 12"
+                        StrokeShape="RoundRectangle 20"
                         BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                         Padding="16">
                     <VerticalStackLayout Spacing="2">
@@ -62,7 +62,7 @@
                 </Border>
 
                 <Border Grid.Column="1"
-                        StrokeShape="RoundRectangle 12"
+                        StrokeShape="RoundRectangle 20"
                         BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                         Padding="16">
                     <VerticalStackLayout Spacing="2">
@@ -82,7 +82,7 @@
             </Grid>
 
             <!-- This vs last month comparison -->
-            <Border StrokeShape="RoundRectangle 12"
+            <Border StrokeShape="RoundRectangle 20"
                     BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                     Padding="16">
                 <VerticalStackLayout Spacing="8">
@@ -128,7 +128,7 @@
                             SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border StrokeShape="RoundRectangle 10"
+                        <Border StrokeShape="RoundRectangle 16"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                                 Padding="12,10"
                                 Margin="0,0,0,6">
