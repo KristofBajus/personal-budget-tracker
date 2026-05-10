@@ -12,7 +12,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="auto, *"
-          Padding="16"
+          Padding="32,16"
           RowSpacing="12">
 
         <Button Grid.Row="0"

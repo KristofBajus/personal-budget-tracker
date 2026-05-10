@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using CommunityToolkit.Maui;
 using DAL;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using Project.Models.Services;
 using Project.Models.Services.Interfaces;
 using Project.ViewModels;
 using Project.Views;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace Project;
 
@@ -39,6 +41,8 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -72,6 +76,7 @@ public static class MauiProgram
         builder.Services.AddTransient<TransactionListViewModel>();
         builder.Services.AddTransient<AddEditTransactionViewModel>();
         builder.Services.AddTransient<AddEditCategoryViewModel>();
+        builder.Services.AddTransient<StatisticsViewModel>();
 
         // Pages — auth flow
         builder.Services.AddTransient<LoginPage>();

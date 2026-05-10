@@ -1,10 +1,164 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="Project.Views.StatisticsPage"
              Title="Statistics">
-    <Label Text="Statistics — Phase 10"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertBool" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="32,16" Spacing="16">
+
+            <!-- Time range picker -->
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <Label Text="Time range"
+                       FontSize="16"
+                       FontFamily="OpenSansSemibold"
+                       VerticalOptions="Center" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1.5"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="12,2">
+                    <Picker ItemsSource="{Binding TimeRangeOptions}"
+                            SelectedItem="{Binding SelectedTimeRange}"
+                            WidthRequest="160" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- Summary card -->
+            <Border StrokeShape="RoundRectangle 20"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                    Padding="16">
+                <Grid ColumnDefinitions="*, auto, *, auto, *">
+
+                    <VerticalStackLayout Grid.Column="0" Spacing="2" HorizontalOptions="Center">
+                        <Label Text="Income"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource IncomeColor}"
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding TotalIncome, StringFormat='{0:N2}'}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <BoxView Grid.Column="1"
+                             WidthRequest="1"
+                             Margin="8,0"
+                             VerticalOptions="Fill"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+
+                    <VerticalStackLayout Grid.Column="2" Spacing="2" HorizontalOptions="Center">
+                        <Label Text="Expenses"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource ExpenseColor}"
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding TotalExpenses, StringFormat='{0:N2}'}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <BoxView Grid.Column="3"
+                             WidthRequest="1"
+                             Margin="8,0"
+                             VerticalOptions="Fill"
+                             BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+
+                    <VerticalStackLayout Grid.Column="4" Spacing="2" HorizontalOptions="Center">
+                        <Label Text="Net"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                               HorizontalOptions="Center" />
+                        <Label Text="{Binding NetAmount, StringFormat='{0:+#,##0.00;-#,##0.00;0.00}'}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                </Grid>
+            </Border>
+
+            <!-- Empty state -->
+            <Label Text="No transactions found for this period."
+                   FontSize="13"
+                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                   HorizontalOptions="Center"
+                   Margin="0,8"
+                   IsVisible="{Binding HasNoData}" />
+
+            <!-- Chart sections — hidden entirely when there is no data -->
+            <VerticalStackLayout Spacing="16"
+                                 IsVisible="{Binding HasNoData, Converter={StaticResource InvertBool}}">
+
+                <!-- Bar chart: Income vs Expenses -->
+                <Label Text="Income vs Expenses"
+                       FontSize="16"
+                       FontFamily="OpenSansSemibold"
+                       Margin="4,0,0,0" />
+
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="8">
+                    <lvc:CartesianChart Series="{Binding BarSeries}"
+                                        XAxes="{Binding BarXAxes}"
+                                        LegendPosition="Bottom"
+                                        HeightRequest="260" />
+                </Border>
+
+                <!-- Pie chart: Spending by Category -->
+                <Label Text="Spending by Category"
+                       FontSize="16"
+                       FontFamily="OpenSansSemibold"
+                       Margin="4,0,0,0" />
+
+                <Label Text="No expense transactions in this period."
+                       FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding HasPieData, Converter={StaticResource InvertBool}}" />
+
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="8"
+                        IsVisible="{Binding HasPieData}">
+                    <lvc:PieChart Series="{Binding PieSeries}"
+                                  LegendPosition="Right"
+                                  HeightRequest="300" />
+                </Border>
+
+                <!-- Line chart: Balance Over Time -->
+                <Label Text="Balance Over Time"
+                       FontSize="16"
+                       FontFamily="OpenSansSemibold"
+                       Margin="4,0,0,0" />
+
+                <Label Text="No balance data for this period."
+                       FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding HasLineData, Converter={StaticResource InvertBool}}" />
+
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="8"
+                        IsVisible="{Binding HasLineData}">
+                    <lvc:CartesianChart Series="{Binding LineSeries}"
+                                        XAxes="{Binding LineXAxes}"
+                                        HeightRequest="260" />
+                </Border>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

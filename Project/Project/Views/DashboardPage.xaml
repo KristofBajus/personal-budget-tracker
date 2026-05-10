@@ -12,7 +12,7 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
+        <VerticalStackLayout Padding="32,16" Spacing="12">
 
             <!-- Balance card -->
             <Border StrokeShape="RoundRectangle 20"

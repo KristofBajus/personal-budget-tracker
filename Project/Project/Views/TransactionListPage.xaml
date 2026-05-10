@@ -17,26 +17,41 @@
         <Border Grid.Row="0"
                 StrokeThickness="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
-                Padding="16,12">
-            <Grid ColumnDefinitions="*, *, *, auto" ColumnSpacing="10">
+                Padding="0,12">
+            <Grid ColumnDefinitions="*, *, *, auto" ColumnSpacing="10" Margin="32,0">
 
                 <!-- Type filter -->
-                <Picker Grid.Column="0"
-                        Title="All types"
-                        ItemsSource="{Binding TypeOptions}"
-                        SelectedItem="{Binding FilterTypeName}" />
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1"
+                        Padding="8,2">
+                    <Picker Title="All types"
+                            ItemsSource="{Binding TypeOptions}"
+                            SelectedItem="{Binding FilterTypeName}" />
+                </Border>
 
                 <!-- Month filter -->
-                <Picker Grid.Column="1"
-                        Title="All months"
-                        ItemsSource="{Binding MonthOptions}"
-                        SelectedItem="{Binding FilterMonthName}" />
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1"
+                        Padding="8,2">
+                    <Picker Title="All months"
+                            ItemsSource="{Binding MonthOptions}"
+                            SelectedItem="{Binding FilterMonthName}" />
+                </Border>
 
                 <!-- Year filter -->
-                <Picker Grid.Column="2"
-                        Title="All years"
-                        ItemsSource="{Binding YearOptions}"
-                        SelectedItem="{Binding FilterYearName}" />
+                <Border Grid.Column="2"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1"
+                        Padding="8,2">
+                    <Picker Title="All years"
+                            ItemsSource="{Binding YearOptions}"
+                            SelectedItem="{Binding FilterYearName}" />
+                </Border>
 
                 <!-- Add button -->
                 <Button Grid.Column="3"
@@ -66,7 +81,7 @@
                     <Border StrokeShape="RoundRectangle 16"
                             BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                             Padding="12,10"
-                            Margin="16,0,16,6">
+                            Margin="32,0,32,6">
                         <Grid ColumnDefinitions="32, *, auto" ColumnSpacing="10">
 
                             <!-- Category colour dot -->
