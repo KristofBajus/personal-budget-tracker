@@ -5,11 +5,13 @@
                x:Class="Project.Views.Popups.AddEditTransactionPopup"
                CanBeDismissedByTappingOutsideOfPopup="False">
 
-    <Border StrokeShape="RoundRectangle 16"
+    <Border StrokeShape="RoundRectangle 20"
             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-            WidthRequest="420"
+            MaximumWidthRequest="460"
+            Margin="20"
             Padding="28,24">
 
+        <ScrollView MaximumHeightRequest="700">
         <VerticalStackLayout Spacing="16">
 
             <!-- Title -->
@@ -21,43 +23,65 @@
             <VerticalStackLayout Spacing="6">
                 <Label Text="Type" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                <Picker ItemsSource="{Binding TypeOptions}"
-                        SelectedItem="{Binding SelectedType}" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <Picker ItemsSource="{Binding TypeOptions}"
+                            SelectedItem="{Binding SelectedType}" />
+                </Border>
             </VerticalStackLayout>
 
             <!-- Amount -->
             <VerticalStackLayout Spacing="6">
                 <Label Text="Amount" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                <Entry Placeholder="0.00"
-                       Text="{Binding AmountText}"
-                       Keyboard="Numeric" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <Entry Placeholder="0.00"
+                           Text="{Binding AmountText}"
+                           Keyboard="Numeric"
+                           BackgroundColor="Transparent" />
+                </Border>
             </VerticalStackLayout>
 
             <!-- Date -->
             <VerticalStackLayout Spacing="6">
                 <Label Text="Date" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                <DatePicker Date="{Binding Date}"
-                            Format="dd MMM yyyy" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <DatePicker Date="{Binding Date}"
+                                Format="dd MMM yyyy" />
+                </Border>
             </VerticalStackLayout>
 
             <!-- Category -->
             <VerticalStackLayout Spacing="6">
                 <Label Text="Category" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                <Picker ItemsSource="{Binding Categories}"
-                        SelectedItem="{Binding SelectedCategory}"
-                        ItemDisplayBinding="{Binding Name}" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <Picker ItemsSource="{Binding Categories}"
+                            SelectedItem="{Binding SelectedCategory}"
+                            ItemDisplayBinding="{Binding Name}" />
+                </Border>
             </VerticalStackLayout>
 
             <!-- Note -->
             <VerticalStackLayout Spacing="6">
                 <Label Text="Note (optional)" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
-                <Entry Placeholder="Add a note..."
-                       Text="{Binding Note}"
-                       MaxLength="500" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <Entry Placeholder="Add a note..."
+                           Text="{Binding Note}"
+                           MaxLength="500"
+                           BackgroundColor="Transparent" />
+                </Border>
             </VerticalStackLayout>
 
             <!-- Error -->
@@ -79,6 +103,7 @@
             </Grid>
 
         </VerticalStackLayout>
+        </ScrollView>
     </Border>
 
 </toolkit:Popup>

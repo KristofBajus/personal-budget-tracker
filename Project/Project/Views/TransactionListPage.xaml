@@ -63,7 +63,7 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border StrokeShape="RoundRectangle 10"
+                    <Border StrokeShape="RoundRectangle 16"
                             BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                             Padding="12,10"
                             Margin="16,0,16,6">
@@ -109,20 +109,29 @@
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
-                                <HorizontalStackLayout Spacing="8" HorizontalOptions="End">
+                                <HorizontalStackLayout Spacing="6" HorizontalOptions="End">
                                     <Button Text="Edit"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}"
                                             CommandParameter="{Binding .}"
-                                            FontSize="11"
-                                            Padding="8,4"
-                                            HeightRequest="28" />
+                                            FontSize="13"
+                                            FontFamily="OpenSansSemibold"
+                                            Padding="10,2"
+                                            HeightRequest="26"
+                                            MinimumHeightRequest="0"
+                                            BackgroundColor="Transparent"
+                                            TextColor="{StaticResource Primary}"
+                                            BorderWidth="0" />
                                     <Button Text="Delete"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
                                             CommandParameter="{Binding .}"
-                                            FontSize="11"
-                                            Padding="8,4"
-                                            HeightRequest="28"
-                                            BackgroundColor="{StaticResource ExpenseColor}" />
+                                            FontSize="13"
+                                            FontFamily="OpenSansSemibold"
+                                            Padding="10,2"
+                                            HeightRequest="26"
+                                            MinimumHeightRequest="0"
+                                            BackgroundColor="Transparent"
+                                            TextColor="{StaticResource ExpenseColor}"
+                                            BorderWidth="0" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
