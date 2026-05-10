@@ -18,6 +18,23 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveNativeBorder", (handler, _) =>
+        {
+#if IOS || MACCATALYST
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+            handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+#endif
+        });
+
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("RemoveNativeBorder", (handler, _) =>
+        {
+#if IOS || MACCATALYST
+            handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+            handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+#endif
+        });
+
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -54,6 +71,7 @@ public static class MauiProgram
         builder.Services.AddTransient<CategoryViewModel>();
         builder.Services.AddTransient<TransactionListViewModel>();
         builder.Services.AddTransient<AddEditTransactionViewModel>();
+        builder.Services.AddTransient<AddEditCategoryViewModel>();
 
         // Pages — auth flow
         builder.Services.AddTransient<LoginPage>();

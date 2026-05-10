@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="Project.Views.Popups.AddEditCategoryPopup"
+               CanBeDismissedByTappingOutsideOfPopup="False">
+
+    <toolkit:Popup.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertBool" />
+    </toolkit:Popup.Resources>
+
+    <Border StrokeShape="RoundRectangle 20"
+            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+            MaximumWidthRequest="420"
+            Margin="20"
+            Padding="28,24">
+
+        <ScrollView MaximumHeightRequest="700">
+        <VerticalStackLayout Spacing="16">
+
+            <!-- Title -->
+            <Label Text="{Binding PopupTitle}"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+
+            <!-- Name -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Name" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <Entry Placeholder="Category name"
+                           Text="{Binding Name}"
+                           BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Type -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Type" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <Border StrokeShape="RoundRectangle 20"
+                        Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
+                        Padding="12,0">
+                    <Picker ItemsSource="{Binding TypeOptions}"
+                            SelectedItem="{Binding SelectedType}"
+                            IsEnabled="{Binding IsEditing, Converter={StaticResource InvertBool}}" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Color picker -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Color" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                <FlexLayout x:Name="ColorGrid"
+                            Wrap="Wrap"
+                            JustifyContent="Start"
+                            AlignItems="Center" />
+            </VerticalStackLayout>
+
+            <!-- Error -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="{StaticResource ExpenseColor}"
+                   FontSize="13"
+                   IsVisible="{Binding HasError}" />
+
+            <!-- Buttons -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12" Margin="0,4,0,0">
+                <Button Grid.Column="0"
+                        Text="Cancel"
+                        Clicked="OnCancelClicked"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource White}}" />
+                <Button Grid.Column="1"
+                        Text="Save"
+                        Command="{Binding SaveCommand}" />
+            </Grid>
+
+        </VerticalStackLayout>
+        </ScrollView>
+    </Border>
+
+</toolkit:Popup>

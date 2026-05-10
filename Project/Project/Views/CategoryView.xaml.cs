@@ -12,4 +12,10 @@ public partial class CategoryView : ContentPage
         InitializeComponent();
         BindingContext = IPlatformApplication.Current!.Services.GetRequiredService<CategoryViewModel>();
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await ((CategoryViewModel)BindingContext).LoadAsync();
+    }
 }
