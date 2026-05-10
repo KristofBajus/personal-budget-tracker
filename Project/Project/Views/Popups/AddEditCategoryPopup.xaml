@@ -3,7 +3,8 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="Project.Views.Popups.AddEditCategoryPopup"
-               CanBeDismissedByTappingOutsideOfPopup="False">
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               HorizontalOptions="Fill">
 
     <toolkit:Popup.Resources>
         <toolkit:InvertedBoolConverter x:Key="InvertBool" />
@@ -11,7 +12,7 @@
 
     <Border StrokeShape="RoundRectangle 20"
             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-            MaximumWidthRequest="420"
+            WidthRequest="400"
             Margin="20"
             Padding="28,24">
 

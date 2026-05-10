@@ -88,13 +88,15 @@ public partial class TransactionListViewModel : BaseViewModel
     {
         if (IsBusy) return;
         IsBusy = true;
-        Transactions = new ObservableCollection<TransactionDto>(
-            await _transactionService.GetFilteredAsync(
-                _session.CurrentUser!.Id,
-                MappedFilterType,
-                null,
-                MappedFilterMonth,
-                MappedFilterYear));
+        var results = await _transactionService.GetFilteredAsync(
+            _session.CurrentUser!.Id,
+            MappedFilterType,
+            null,
+            MappedFilterMonth,
+            MappedFilterYear);
+        Transactions.Clear();
+        foreach (var item in results)
+            Transactions.Add(item);
         IsBusy = false;
     }
 
