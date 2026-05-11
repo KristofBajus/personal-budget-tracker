@@ -11,5 +11,6 @@ public class UserDto
     public string Currency { get; set; } = null!;
     public Role Role { get; set; }
     public bool IsBanned { get; set; }
+    public bool IsDeleted { get; set; }
     public DateTime CreatedAt { get; set; }
 }

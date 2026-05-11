@@ -3,8 +3,120 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project.Views.AdminDashboardPage"
              Title="Admin Overview">
-    <Label Text="Admin Dashboard — Phase 11"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+
+    <ScrollView>
+        <VerticalStackLayout Padding="32,16" Spacing="12">
+
+            <!-- Hero card -->
+            <Border StrokeShape="RoundRectangle 20"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    Padding="24,20">
+                <Grid ColumnDefinitions="*, *">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Total Users"
+                               FontSize="13"
+                               TextColor="#DBEAFE" />
+                        <Label Text="{Binding TotalUsers}"
+                               FontSize="38"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Total Transactions"
+                               FontSize="13"
+                               TextColor="#DBEAFE" />
+                        <Label Text="{Binding TotalTransactions}"
+                               FontSize="38"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Active / Banned -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Active"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource IncomeColor}" />
+                        <Label Text="{Binding ActiveUsers}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="Users"
+                               FontSize="11"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Banned"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource ExpenseColor}" />
+                        <Label Text="{Binding BannedUsers}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="Users"
+                               FontSize="11"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!-- Deleted / New this month -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Deleted"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                        <Label Text="{Binding DeletedUsers}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="Users"
+                               FontSize="11"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="New This Month"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" />
+                        <Label Text="{Binding NewUsersThisMonth}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="Users"
+                               FontSize="11"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

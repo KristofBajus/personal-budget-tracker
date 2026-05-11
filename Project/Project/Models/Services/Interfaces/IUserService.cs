@@ -10,4 +10,5 @@ public interface IUserService
     Task BanAsync(int userId);
     Task UnbanAsync(int userId);
     Task DeleteAsync(int userId);
+    Task<SystemStatsDto> GetSystemStatsAsync();
 }

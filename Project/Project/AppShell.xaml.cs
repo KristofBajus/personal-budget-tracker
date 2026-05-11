@@ -22,6 +22,7 @@ public partial class AppShell : Shell
     }
 
     public bool IsAdmin => _session.CurrentUser?.Role == Role.Admin;
+    public bool IsNotAdmin => !IsAdmin;
     public string CurrentUsername => _session.CurrentUser?.Username ?? string.Empty;
 
     private void OnLogoutClicked(object? sender, System.EventArgs e)

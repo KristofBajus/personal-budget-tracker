@@ -21,28 +21,33 @@
         </Grid>
     </Shell.FlyoutHeader>
 
-    <!-- Main navigation -->
-    <FlyoutItem Title="Dashboard">
+    <!-- Main navigation — hidden for admin -->
+    <FlyoutItem Title="Dashboard"
+                IsVisible="{Binding IsNotAdmin}">
         <ShellContent Route="dashboard"
                       ContentTemplate="{DataTemplate views:DashboardPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Transactions">
+    <FlyoutItem Title="Transactions"
+                IsVisible="{Binding IsNotAdmin}">
         <ShellContent Route="transactions"
                       ContentTemplate="{DataTemplate views:TransactionListPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Categories">
+    <FlyoutItem Title="Categories"
+                IsVisible="{Binding IsNotAdmin}">
         <ShellContent Route="categories"
                       ContentTemplate="{DataTemplate views:CategoryView}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Statistics">
+    <FlyoutItem Title="Statistics"
+                IsVisible="{Binding IsNotAdmin}">
         <ShellContent Route="statistics"
                       ContentTemplate="{DataTemplate views:StatisticsPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Profile">
+    <FlyoutItem Title="Profile"
+                IsVisible="{Binding IsNotAdmin}">
         <ShellContent Route="profile"
                       ContentTemplate="{DataTemplate views:ProfilePage}" />
     </FlyoutItem>
