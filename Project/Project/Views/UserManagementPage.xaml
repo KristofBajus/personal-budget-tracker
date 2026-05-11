@@ -16,9 +16,13 @@
                 StrokeThickness="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                 Padding="0,12">
-            <Grid ColumnDefinitions="*, auto, auto" ColumnSpacing="10" Margin="32,0">
+            <FlexLayout Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Center"
+                        Margin="32,0">
 
-                <Border Grid.Column="0"
+                <Border FlexLayout.Grow="1"
+                        Margin="0,4,8,4"
                         StrokeShape="RoundRectangle 12"
                         Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="1"
@@ -28,7 +32,7 @@
                            ClearButtonVisibility="WhileEditing" />
                 </Border>
 
-                <Border Grid.Column="1"
+                <Border Margin="0,4,8,4"
                         StrokeShape="RoundRectangle 12"
                         Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="1"
@@ -38,7 +42,7 @@
                             WidthRequest="140" />
                 </Border>
 
-                <Border Grid.Column="2"
+                <Border Margin="0,4,0,4"
                         StrokeShape="RoundRectangle 12"
                         Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="1"
@@ -48,7 +52,7 @@
                             WidthRequest="120" />
                 </Border>
 
-            </Grid>
+            </FlexLayout>
         </Border>
 
         <!-- User list -->

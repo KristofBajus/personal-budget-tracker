@@ -18,10 +18,14 @@
                 StrokeThickness="0"
                 BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                 Padding="0,12">
-            <Grid ColumnDefinitions="*, *, *, auto" ColumnSpacing="10" Margin="32,0">
+            <FlexLayout Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Center"
+                        Margin="16,0">
 
                 <!-- Type filter -->
-                <Border Grid.Column="0"
+                <Border FlexLayout.Grow="1"
+                        Margin="0,4,8,4"
                         StrokeShape="RoundRectangle 12"
                         Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="1"
@@ -32,7 +36,8 @@
                 </Border>
 
                 <!-- Month filter -->
-                <Border Grid.Column="1"
+                <Border FlexLayout.Grow="1"
+                        Margin="0,4,8,4"
                         StrokeShape="RoundRectangle 12"
                         Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="1"
@@ -43,7 +48,8 @@
                 </Border>
 
                 <!-- Year filter -->
-                <Border Grid.Column="2"
+                <Border FlexLayout.Grow="1"
+                        Margin="0,4,8,4"
                         StrokeShape="RoundRectangle 12"
                         Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                         StrokeThickness="1"
@@ -54,12 +60,12 @@
                 </Border>
 
                 <!-- Add button -->
-                <Button Grid.Column="3"
+                <Button Margin="0,4,0,4"
                         Text="+ Add"
                         Command="{Binding AddCommand}"
                         WidthRequest="80" />
 
-            </Grid>
+            </FlexLayout>
         </Border>
 
         <!-- Transaction list -->

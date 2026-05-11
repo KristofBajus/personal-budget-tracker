@@ -20,177 +20,165 @@
                 Command="{Binding AddCommand}"
                 HorizontalOptions="End" />
 
-        <Grid Grid.Row="1"
-              ColumnDefinitions="*, *"
-              ColumnSpacing="12">
+        <ScrollView Grid.Row="1">
+            <FlexLayout Wrap="Wrap" Direction="Row" AlignItems="Start">
 
-        <!-- Income panel -->
-        <Border Grid.Column="0"
-                StrokeShape="RoundRectangle 20"
-                BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
-                Padding="0">
-            <VerticalStackLayout>
+                <!-- Income panel -->
+                <Border FlexLayout.Grow="1"
+                        FlexLayout.Basis="280"
+                        Margin="3,0,3,8"
+                        StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="0">
+                    <VerticalStackLayout>
 
-                <Label Text="Income"
-                       FontSize="14"
-                       FontFamily="OpenSansSemibold"
-                       TextColor="{StaticResource IncomeColor}"
-                       Margin="14,12,14,8" />
+                        <Label Text="Income"
+                               FontSize="14"
+                               FontFamily="OpenSansSemibold"
+                               TextColor="{StaticResource IncomeColor}"
+                               Margin="14,12,14,8" />
 
-                <BoxView HeightRequest="1"
-                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
-                         Margin="0,0,0,4" />
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                                 Margin="0,0,0,4" />
 
-                <CollectionView ItemsSource="{Binding IncomeCategories}"
-                                SelectionMode="None">
-                    <CollectionView.EmptyView>
-                        <Label Text="No income categories."
-                               FontSize="12"
-                               HorizontalOptions="Center"
-                               Margin="0,16"
-                               TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
-                    </CollectionView.EmptyView>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="24, *, auto"
-                                  ColumnSpacing="8"
-                                  Padding="12,6"
-                                  MinimumHeightRequest="44">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding IncomeCategories}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="24, *, auto"
+                                          ColumnSpacing="8"
+                                          Padding="12,6"
+                                          MinimumHeightRequest="44">
 
-                                <BoxView Grid.Column="0"
-                                         WidthRequest="12"
-                                         HeightRequest="12"
-                                         CornerRadius="6"
-                                         VerticalOptions="Center"
-                                         HorizontalOptions="Center"
-                                         BackgroundColor="Transparent"
-                                         Color="{Binding Color, Converter={StaticResource HexColor}}" />
+                                        <BoxView Grid.Column="0"
+                                                 WidthRequest="12"
+                                                 HeightRequest="12"
+                                                 CornerRadius="6"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="Center"
+                                                 BackgroundColor="Transparent"
+                                                 Color="{Binding Color, Converter={StaticResource HexColor}}" />
 
-                                <Label Grid.Column="1"
-                                       Text="{Binding Name}"
-                                       FontSize="13"
-                                       VerticalOptions="Center" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Name}"
+                                               FontSize="13"
+                                               VerticalOptions="Center" />
 
-                                <HorizontalStackLayout Grid.Column="2"
-                                                       Spacing="6"
-                                                       VerticalOptions="Center"
-                                                       IsVisible="{Binding IsGlobal, Converter={StaticResource InvertBool}}">
-                                    <Button Text="Edit"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}"
-                                            CommandParameter="{Binding .}"
-                                            FontSize="13"
-                                            Padding="10,2"
-                                            HeightRequest="26"
-                                            MinimumHeightRequest="0"
-                                            BackgroundColor="Transparent"
-                                            TextColor="{StaticResource Primary}"
-                                            BorderWidth="0"
-                                            FontFamily="OpenSansSemibold" />
-                                    <Button Text="Delete"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
-                                            CommandParameter="{Binding .}"
-                                            FontSize="13"
-                                            Padding="10,2"
-                                            HeightRequest="26"
-                                            MinimumHeightRequest="0"
-                                            BackgroundColor="Transparent"
-                                            TextColor="{StaticResource ExpenseColor}"
-                                            BorderWidth="0"
-                                            FontFamily="OpenSansSemibold" />
-                                </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="2"
+                                                               Spacing="6"
+                                                               VerticalOptions="Center"
+                                                               IsVisible="{Binding IsGlobal, Converter={StaticResource InvertBool}}">
+                                            <Button Text="Edit"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    FontSize="13"
+                                                    Padding="10,2"
+                                                    HeightRequest="26"
+                                                    MinimumHeightRequest="0"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource Primary}"
+                                                    BorderWidth="0"
+                                                    FontFamily="OpenSansSemibold" />
+                                            <Button Text="Delete"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    FontSize="13"
+                                                    Padding="10,2"
+                                                    HeightRequest="26"
+                                                    MinimumHeightRequest="0"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource ExpenseColor}"
+                                                    BorderWidth="0"
+                                                    FontFamily="OpenSansSemibold" />
+                                        </HorizontalStackLayout>
 
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
 
-            </VerticalStackLayout>
-        </Border>
+                    </VerticalStackLayout>
+                </Border>
 
-        <!-- Expense panel -->
-        <Border Grid.Column="1"
-                StrokeShape="RoundRectangle 20"
-                BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
-                Padding="0">
-            <VerticalStackLayout>
+                <!-- Expense panel -->
+                <Border FlexLayout.Grow="1"
+                        FlexLayout.Basis="280"
+                        Margin="3,0,3,8"
+                        StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="0">
+                    <VerticalStackLayout>
 
-                <Label Text="Expenses"
-                       FontSize="14"
-                       FontFamily="OpenSansSemibold"
-                       TextColor="{StaticResource ExpenseColor}"
-                       Margin="14,12,14,8" />
+                        <Label Text="Expenses"
+                               FontSize="14"
+                               FontFamily="OpenSansSemibold"
+                               TextColor="{StaticResource ExpenseColor}"
+                               Margin="14,12,14,8" />
 
-                <BoxView HeightRequest="1"
-                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
-                         Margin="0,0,0,4" />
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}"
+                                 Margin="0,0,0,4" />
 
-                <CollectionView ItemsSource="{Binding ExpenseCategories}"
-                                SelectionMode="None">
-                    <CollectionView.EmptyView>
-                        <Label Text="No expense categories."
-                               FontSize="12"
-                               HorizontalOptions="Center"
-                               Margin="0,16"
-                               TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
-                    </CollectionView.EmptyView>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="24, *, auto"
-                                  ColumnSpacing="8"
-                                  Padding="12,6"
-                                  MinimumHeightRequest="44">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding ExpenseCategories}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="24, *, auto"
+                                          ColumnSpacing="8"
+                                          Padding="12,6"
+                                          MinimumHeightRequest="44">
 
-                                <BoxView Grid.Column="0"
-                                         WidthRequest="12"
-                                         HeightRequest="12"
-                                         CornerRadius="6"
-                                         VerticalOptions="Center"
-                                         HorizontalOptions="Center"
-                                         BackgroundColor="Transparent"
-                                         Color="{Binding Color, Converter={StaticResource HexColor}}" />
+                                        <BoxView Grid.Column="0"
+                                                 WidthRequest="12"
+                                                 HeightRequest="12"
+                                                 CornerRadius="6"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="Center"
+                                                 BackgroundColor="Transparent"
+                                                 Color="{Binding Color, Converter={StaticResource HexColor}}" />
 
-                                <Label Grid.Column="1"
-                                       Text="{Binding Name}"
-                                       FontSize="13"
-                                       VerticalOptions="Center" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Name}"
+                                               FontSize="13"
+                                               VerticalOptions="Center" />
 
-                                <HorizontalStackLayout Grid.Column="2"
-                                                       Spacing="6"
-                                                       VerticalOptions="Center"
-                                                       IsVisible="{Binding IsGlobal, Converter={StaticResource InvertBool}}">
-                                    <Button Text="Edit"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}"
-                                            CommandParameter="{Binding .}"
-                                            FontSize="13"
-                                            Padding="10,2"
-                                            HeightRequest="26"
-                                            MinimumHeightRequest="0"
-                                            BackgroundColor="Transparent"
-                                            TextColor="{StaticResource Primary}"
-                                            BorderWidth="0"
-                                            FontFamily="OpenSansSemibold" />
-                                    <Button Text="Delete"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
-                                            CommandParameter="{Binding .}"
-                                            FontSize="13"
-                                            Padding="10,2"
-                                            HeightRequest="26"
-                                            MinimumHeightRequest="0"
-                                            BackgroundColor="Transparent"
-                                            TextColor="{StaticResource ExpenseColor}"
-                                            BorderWidth="0"
-                                            FontFamily="OpenSansSemibold" />
-                                </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="2"
+                                                               Spacing="6"
+                                                               VerticalOptions="Center"
+                                                               IsVisible="{Binding IsGlobal, Converter={StaticResource InvertBool}}">
+                                            <Button Text="Edit"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    FontSize="13"
+                                                    Padding="10,2"
+                                                    HeightRequest="26"
+                                                    MinimumHeightRequest="0"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource Primary}"
+                                                    BorderWidth="0"
+                                                    FontFamily="OpenSansSemibold" />
+                                            <Button Text="Delete"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    FontSize="13"
+                                                    Padding="10,2"
+                                                    HeightRequest="26"
+                                                    MinimumHeightRequest="0"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource ExpenseColor}"
+                                                    BorderWidth="0"
+                                                    FontFamily="OpenSansSemibold" />
+                                        </HorizontalStackLayout>
 
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
 
-            </VerticalStackLayout>
-        </Border>
+                    </VerticalStackLayout>
+                </Border>
 
-        </Grid>
+            </FlexLayout>
+        </ScrollView>
 
     </Grid>
 

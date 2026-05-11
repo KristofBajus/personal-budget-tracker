@@ -11,18 +11,19 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <Grid Padding="144,45"
-              ColumnDefinitions="*, *"
-              ColumnSpacing="24"
-              VerticalOptions="Start">
+        <FlexLayout Wrap="Wrap"
+                    Direction="Row"
+                    AlignItems="Start"
+                    Padding="24,32">
 
             <!-- Left: Account info card -->
-            <Border Grid.Column="0"
+            <Border FlexLayout.Basis="220"
+                    FlexLayout.Grow="1"
+                    Margin="3,0,3,12"
                     StrokeShape="RoundRectangle 20"
                     StrokeThickness="0"
                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
-                    Padding="24,20"
-                    VerticalOptions="Start">
+                    Padding="24,20">
                 <VerticalStackLayout Spacing="6">
                     <Label Text="{Binding Username, StringFormat='@{0}'}"
                            FontSize="24"
@@ -45,33 +46,36 @@
             </Border>
 
             <!-- Right: Edit sections -->
-            <VerticalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Start">
+            <VerticalStackLayout FlexLayout.Basis="320"
+                                 FlexLayout.Grow="2"
+                                 Margin="3,0,3,0"
+                                 Spacing="12">
 
                 <!-- Change username -->
                 <Border StrokeShape="RoundRectangle 20"
                         BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                         Padding="20">
                     <VerticalStackLayout Spacing="8">
-                        <Grid ColumnDefinitions="auto, 220, auto" HorizontalOptions="Start" ColumnSpacing="12">
-                            <Label Grid.Column="0"
-                                   Text="Username"
-                                   FontSize="13"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"
-                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                            <Border Grid.Column="1"
+                        <Label Text="Change Username"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                        <FlexLayout Wrap="Wrap" Direction="Row" AlignItems="Center">
+                            <Border FlexLayout.Basis="220"
                                     StrokeShape="RoundRectangle 12"
                                     Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                                     StrokeThickness="1"
-                                    Padding="8,2">
+                                    Padding="8,2"
+                                    Margin="0,0,8,4">
                                 <Entry Placeholder="New username"
                                        Text="{Binding NewUsername}" />
                             </Border>
-                            <Button Grid.Column="2"
+                            <Button FlexLayout.Grow="1"
                                     Text="Save"
                                     Command="{Binding UpdateUsernameCommand}"
-                                    WidthRequest="80" />
-                        </Grid>
+                                    HorizontalOptions="End"
+                                    Margin="0,4,0,4" />
+                        </FlexLayout>
                         <Label Text="{Binding UsernameError}"
                                IsVisible="{Binding HasUsernameError}"
                                TextColor="{StaticResource ExpenseColor}"
@@ -88,27 +92,27 @@
                         BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                         Padding="20">
                     <VerticalStackLayout Spacing="8">
-                        <Grid ColumnDefinitions="auto, 220, auto" HorizontalOptions="Start" ColumnSpacing="12">
-                            <Label Grid.Column="0"
-                                   Text="Email"
-                                   FontSize="13"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="Center"
-                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
-                            <Border Grid.Column="1"
+                        <Label Text="Change Email"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                        <FlexLayout Wrap="Wrap" Direction="Row" AlignItems="Center">
+                            <Border FlexLayout.Basis="220"
                                     StrokeShape="RoundRectangle 12"
                                     Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
                                     StrokeThickness="1"
-                                    Padding="8,2">
+                                    Padding="8,2"
+                                    Margin="0,0,8,4">
                                 <Entry Placeholder="New email"
                                        Text="{Binding NewEmail}"
                                        Keyboard="Email" />
                             </Border>
-                            <Button Grid.Column="2"
+                            <Button FlexLayout.Grow="1"
                                     Text="Save"
                                     Command="{Binding UpdateEmailCommand}"
-                                    WidthRequest="80" />
-                        </Grid>
+                                    HorizontalOptions="End"
+                                    Margin="0,4,0,4" />
+                        </FlexLayout>
                         <Label Text="{Binding EmailError}"
                                IsVisible="{Binding HasEmailError}"
                                TextColor="{StaticResource ExpenseColor}"
@@ -229,7 +233,7 @@
 
             </VerticalStackLayout>
 
-        </Grid>
+        </FlexLayout>
     </ScrollView>
 
 </ContentPage>

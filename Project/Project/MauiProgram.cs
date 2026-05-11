@@ -26,6 +26,7 @@ public static class MauiProgram
 #if IOS || MACCATALYST
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
             handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+            handler.PlatformView.AutocapitalizationType = UIKit.UITextAutocapitalizationType.None;
 #endif
         });
 
@@ -107,6 +108,7 @@ public static class MauiProgram
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         db.Database.Migrate();
         SeedService.SeedAdminAsync(db).GetAwaiter().GetResult();
+        SeedService.SeedDemoDataAsync(db).GetAwaiter().GetResult();
 
         return app;
     }

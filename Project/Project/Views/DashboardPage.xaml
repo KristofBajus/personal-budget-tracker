@@ -124,9 +124,9 @@
                    Margin="0,8"
                    IsVisible="{Binding HasNoRecentTransactions}" />
 
-            <CollectionView ItemsSource="{Binding RecentTransactions}"
-                            SelectionMode="None">
-                <CollectionView.ItemTemplate>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentTransactions}"
+                                 Spacing="0">
+                <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Border StrokeShape="RoundRectangle 16"
                                 StrokeThickness="0"
@@ -182,8 +182,8 @@
                             </Grid>
                         </Border>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

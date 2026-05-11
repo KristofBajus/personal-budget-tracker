@@ -72,7 +72,11 @@ public partial class StatisticsViewModel : BaseViewModel
     public partial ISeries[] LineSeries { get; set; } = [];
 
     [ObservableProperty]
-    public partial Axis[] LineXAxes { get; set; } = [new DateTimeAxis(TimeSpan.FromDays(1), d => d.ToString("MMM dd"))];
+    public partial Axis[] LineXAxes { get; set; } = [new DateTimeAxis(TimeSpan.FromDays(1), d => d.ToString("MMM dd"))
+    {
+        MinStep = TimeSpan.FromDays(14).Ticks,
+        LabelsRotation = -30
+    }];
 
     [ObservableProperty]
     public partial bool HasLineData { get; set; }
@@ -157,7 +161,11 @@ public partial class StatisticsViewModel : BaseViewModel
                 Stroke       = new SolidColorPaint(SKColor.Parse("#3B82F6")) { StrokeThickness = 2 }
             }
         ];
-        LineXAxes = [new DateTimeAxis(TimeSpan.FromDays(1), d => d.ToString("MMM dd"))];
+        LineXAxes = [new DateTimeAxis(TimeSpan.FromDays(1), d => d.ToString("MMM dd"))
+    {
+        MinStep = TimeSpan.FromDays(14).Ticks,
+        LabelsRotation = -30
+    }];
 
         IsBusy = false;
     }
