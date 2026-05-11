@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="Project.Views.LoginPage"
              Title="Login">
 
@@ -58,10 +59,31 @@
                         <Border StrokeShape="RoundRectangle 20"
                                 Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
                                 Padding="12,0">
-                            <Entry Placeholder="Enter your password"
-                                   Text="{Binding Password}"
-                                   IsPassword="True"
-                                   BackgroundColor="Transparent" />
+                            <Grid ColumnDefinitions="*, auto" ColumnSpacing="4">
+                                <Entry Grid.Column="0"
+                                       Placeholder="Enter your password"
+                                       Text="{Binding Password}"
+                                       IsPassword="{Binding IsPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                                       BackgroundColor="Transparent" />
+                                <Border Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        StrokeThickness="0"
+                                        Padding="4,0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding TogglePasswordVisibilityCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid>
+                                        <mi:MauiIcon Icon="{mi:Material Icon=Visibility}"
+                                                     IsVisible="{Binding IsPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                        <mi:MauiIcon Icon="{mi:Material Icon=VisibilityOff}"
+                                                     IsVisible="{Binding IsPasswordVisible}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
                         </Border>
                     </VerticalStackLayout>
 

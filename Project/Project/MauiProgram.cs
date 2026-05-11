@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using CommunityToolkit.Maui;
+using MauiIcons.Material;
 using DAL;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseMaterialMauiIcons()
             .UseSkiaSharp()
             .UseLiveCharts()
             .ConfigureFonts(fonts =>
@@ -79,6 +81,7 @@ public static class MauiProgram
         builder.Services.AddTransient<StatisticsViewModel>();
         builder.Services.AddTransient<AdminDashboardViewModel>();
         builder.Services.AddTransient<UserManagementViewModel>();
+        builder.Services.AddTransient<ProfileViewModel>();
 
         // Pages — auth flow
         builder.Services.AddTransient<LoginPage>();

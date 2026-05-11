@@ -19,6 +19,11 @@ public partial class LoginViewModel : BaseViewModel
         _authService = authService;
     }
 
+    [ObservableProperty] public partial bool IsPasswordVisible { get; set; } = false;
+
+    [RelayCommand]
+    private void TogglePasswordVisibility() => IsPasswordVisible = !IsPasswordVisible;
+
     [ObservableProperty]
     public partial string Username { get; set; } = string.Empty;
 

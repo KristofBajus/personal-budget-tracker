@@ -67,6 +67,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="6.0.0" />
         <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
         <PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />

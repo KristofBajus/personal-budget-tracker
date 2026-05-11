@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -22,6 +23,11 @@ public partial class RegisterViewModel : BaseViewModel
     }
 
     public List<string> Currencies { get; } = ["EUR", "USD", "CZK", "GBP", "CHF"];
+
+    [ObservableProperty] public partial bool IsPasswordVisible { get; set; } = false;
+
+    [RelayCommand]
+    private void TogglePasswordVisibility() => IsPasswordVisible = !IsPasswordVisible;
 
     [ObservableProperty]
     public partial string Username { get; set; } = string.Empty;
@@ -61,7 +67,7 @@ public partial class RegisterViewModel : BaseViewModel
             return;
         }
 
-        if (!Email.Contains('@') || !Email.Contains('.'))
+        if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
         {
             ErrorMessage = "Please enter a valid email address.";
             return;

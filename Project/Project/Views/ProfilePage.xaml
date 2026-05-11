@@ -1,10 +1,235 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="Project.Views.ProfilePage"
              Title="Profile">
-    <Label Text="Profile — Phase 12"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid Padding="144,45"
+              ColumnDefinitions="*, *"
+              ColumnSpacing="24"
+              VerticalOptions="Start">
+
+            <!-- Left: Account info card -->
+            <Border Grid.Column="0"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                    Padding="24,20"
+                    VerticalOptions="Start">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{Binding Username, StringFormat='@{0}'}"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Label Text="{Binding Email}"
+                           FontSize="13"
+                           TextColor="#DBEAFE" />
+                    <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start">
+                        <Label Text="{Binding Currency, StringFormat='Currency: {0}'}"
+                               FontSize="12"
+                               TextColor="#93C5FD"
+                               Margin="0,4,16,0" />
+                        <Label Text="{Binding JoinedAt, StringFormat='Joined {0:dd MMM yyyy}'}"
+                               FontSize="12"
+                               TextColor="#93C5FD"
+                               Margin="0,4,0,0" />
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Right: Edit sections -->
+            <VerticalStackLayout Grid.Column="1" Spacing="12" VerticalOptions="Start">
+
+                <!-- Change username -->
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="auto, 220, auto" HorizontalOptions="Start" ColumnSpacing="12">
+                            <Label Grid.Column="0"
+                                   Text="Username"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                            <Border Grid.Column="1"
+                                    StrokeShape="RoundRectangle 12"
+                                    Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                    StrokeThickness="1"
+                                    Padding="8,2">
+                                <Entry Placeholder="New username"
+                                       Text="{Binding NewUsername}" />
+                            </Border>
+                            <Button Grid.Column="2"
+                                    Text="Save"
+                                    Command="{Binding UpdateUsernameCommand}"
+                                    WidthRequest="80" />
+                        </Grid>
+                        <Label Text="{Binding UsernameError}"
+                               IsVisible="{Binding HasUsernameError}"
+                               TextColor="{StaticResource ExpenseColor}"
+                               FontSize="12" />
+                        <Label Text="{Binding UsernameSuccess}"
+                               IsVisible="{Binding HasUsernameSuccess}"
+                               TextColor="{StaticResource IncomeColor}"
+                               FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Change email -->
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="auto, 220, auto" HorizontalOptions="Start" ColumnSpacing="12">
+                            <Label Grid.Column="0"
+                                   Text="Email"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                            <Border Grid.Column="1"
+                                    StrokeShape="RoundRectangle 12"
+                                    Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                    StrokeThickness="1"
+                                    Padding="8,2">
+                                <Entry Placeholder="New email"
+                                       Text="{Binding NewEmail}"
+                                       Keyboard="Email" />
+                            </Border>
+                            <Button Grid.Column="2"
+                                    Text="Save"
+                                    Command="{Binding UpdateEmailCommand}"
+                                    WidthRequest="80" />
+                        </Grid>
+                        <Label Text="{Binding EmailError}"
+                               IsVisible="{Binding HasEmailError}"
+                               TextColor="{StaticResource ExpenseColor}"
+                               FontSize="12" />
+                        <Label Text="{Binding EmailSuccess}"
+                               IsVisible="{Binding HasEmailSuccess}"
+                               TextColor="{StaticResource IncomeColor}"
+                               FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Change password -->
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                        Padding="20">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Change Password"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                        <Border StrokeShape="RoundRectangle 12"
+                                Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                StrokeThickness="1"
+                                Padding="8,2"
+                                WidthRequest="220"
+                                HorizontalOptions="Start">
+                            <Grid ColumnDefinitions="*, auto" ColumnSpacing="4">
+                                <Entry Grid.Column="0"
+                                       Placeholder="Current password"
+                                       Text="{Binding CurrentPassword}"
+                                       IsPassword="{Binding IsCurrentPasswordVisible, Converter={StaticResource InvertedBoolConverter}}" />
+                                <Border Grid.Column="1" BackgroundColor="Transparent" StrokeThickness="0" Padding="4,0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleCurrentPasswordVisibilityCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid>
+                                        <mi:MauiIcon Icon="{mi:Material Icon=Visibility}"
+                                                     IsVisible="{Binding IsCurrentPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                        <mi:MauiIcon Icon="{mi:Material Icon=VisibilityOff}"
+                                                     IsVisible="{Binding IsCurrentPasswordVisible}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 12"
+                                Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                StrokeThickness="1"
+                                Padding="8,2"
+                                WidthRequest="220"
+                                HorizontalOptions="Start">
+                            <Grid ColumnDefinitions="*, auto" ColumnSpacing="4">
+                                <Entry Grid.Column="0"
+                                       Placeholder="New password"
+                                       Text="{Binding NewPassword}"
+                                       IsPassword="{Binding IsNewPasswordVisible, Converter={StaticResource InvertedBoolConverter}}" />
+                                <Border Grid.Column="1" BackgroundColor="Transparent" StrokeThickness="0" Padding="4,0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleNewPasswordVisibilityCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid>
+                                        <mi:MauiIcon Icon="{mi:Material Icon=Visibility}"
+                                                     IsVisible="{Binding IsNewPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                        <mi:MauiIcon Icon="{mi:Material Icon=VisibilityOff}"
+                                                     IsVisible="{Binding IsNewPasswordVisible}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border StrokeShape="RoundRectangle 12"
+                                Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                StrokeThickness="1"
+                                Padding="8,2"
+                                WidthRequest="220"
+                                HorizontalOptions="Start">
+                            <Grid ColumnDefinitions="*, auto" ColumnSpacing="4">
+                                <Entry Grid.Column="0"
+                                       Placeholder="Confirm new password"
+                                       Text="{Binding ConfirmPassword}"
+                                       IsPassword="{Binding IsConfirmPasswordVisible, Converter={StaticResource InvertedBoolConverter}}" />
+                                <Border Grid.Column="1" BackgroundColor="Transparent" StrokeThickness="0" Padding="4,0">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleConfirmPasswordVisibilityCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid>
+                                        <mi:MauiIcon Icon="{mi:Material Icon=Visibility}"
+                                                     IsVisible="{Binding IsConfirmPasswordVisible, Converter={StaticResource InvertedBoolConverter}}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                        <mi:MauiIcon Icon="{mi:Material Icon=VisibilityOff}"
+                                                     IsVisible="{Binding IsConfirmPasswordVisible}"
+                                                     IconSize="18"
+                                                     IconColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Button Text="Change Password"
+                                Command="{Binding ChangePasswordCommand}"
+                                HorizontalOptions="End" />
+                        <Label Text="{Binding PasswordError}"
+                               IsVisible="{Binding HasPasswordError}"
+                               TextColor="{StaticResource ExpenseColor}"
+                               FontSize="12" />
+                        <Label Text="{Binding PasswordSuccess}"
+                               IsVisible="{Binding HasPasswordSuccess}"
+                               TextColor="{StaticResource IncomeColor}"
+                               FontSize="12" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+
 </ContentPage>
