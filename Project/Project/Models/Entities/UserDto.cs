@@ -13,4 +13,7 @@ public class UserDto
     public bool IsBanned { get; set; }
     public bool IsDeleted { get; set; }
     public DateTime CreatedAt { get; set; }
+
+    public bool IsActive => !IsBanned && !IsDeleted;
+    public string StatusText => IsDeleted ? "Deleted" : IsBanned ? "Banned" : "Active";
 }

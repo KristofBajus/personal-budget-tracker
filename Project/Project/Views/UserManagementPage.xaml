@@ -1,10 +1,180 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Project.Views.UserManagementPage"
              Title="User Management">
-    <Label Text="User Management — Phase 11"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="InvertBool" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="auto, *">
+
+        <!-- Filter bar -->
+        <Border Grid.Row="0"
+                StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                Padding="0,12">
+            <Grid ColumnDefinitions="*, auto, auto" ColumnSpacing="10" Margin="32,0">
+
+                <Border Grid.Column="0"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1"
+                        Padding="8,2">
+                    <Entry Placeholder="Search by username or email"
+                           Text="{Binding SearchText}"
+                           ClearButtonVisibility="WhileEditing" />
+                </Border>
+
+                <Border Grid.Column="1"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1"
+                        Padding="8,2">
+                    <Picker ItemsSource="{Binding SortOptions}"
+                            SelectedItem="{Binding SelectedSort}"
+                            WidthRequest="140" />
+                </Border>
+
+                <Border Grid.Column="2"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                        StrokeThickness="1"
+                        Padding="8,2">
+                    <Picker ItemsSource="{Binding StatusOptions}"
+                            SelectedItem="{Binding SelectedStatus}"
+                            WidthRequest="120" />
+                </Border>
+
+            </Grid>
+        </Border>
+
+        <!-- User list -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Users}"
+                        SelectionMode="None"
+                        Margin="0,8,0,0">
+
+            <CollectionView.EmptyView>
+                <Label Text="No users found."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Margin="0,40"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 16"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
+                            Padding="12,10"
+                            Margin="32,0,32,6">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsDeleted}" Value="True">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Grid ColumnDefinitions="*, auto, auto" ColumnSpacing="12">
+
+                            <!-- Username + email + joined -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding Username, StringFormat='@{0}'}"
+                                       FontSize="14"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding Email}"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                                <Label Text="{Binding CreatedAt, StringFormat='Joined {0:dd MMM yyyy}'}"
+                                       FontSize="11"
+                                       TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
+                            </VerticalStackLayout>
+
+                            <!-- Status badge -->
+                            <Border Grid.Column="1"
+                                    StrokeShape="RoundRectangle 8"
+                                    StrokeThickness="0"
+                                    Padding="8,4"
+                                    VerticalOptions="Center">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding StatusText}" Value="Active">
+                                        <Setter Property="BackgroundColor" Value="#DCFCE7" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding StatusText}" Value="Banned">
+                                        <Setter Property="BackgroundColor" Value="#FEE2E2" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding StatusText}" Value="Deleted">
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="{Binding StatusText}"
+                                       FontSize="11"
+                                       FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding StatusText}" Value="Active">
+                                            <Setter Property="TextColor" Value="{StaticResource IncomeColor}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding StatusText}" Value="Banned">
+                                            <Setter Property="TextColor" Value="{StaticResource ExpenseColor}" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding StatusText}" Value="Deleted">
+                                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+
+                            <!-- Action buttons — hidden entirely for deleted users -->
+                            <HorizontalStackLayout Grid.Column="2"
+                                                   Spacing="4"
+                                                   VerticalOptions="Center"
+                                                   IsVisible="{Binding IsDeleted, Converter={StaticResource InvertBool}}">
+                                <Button Text="Ban"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.BanCommand}"
+                                        CommandParameter="{Binding .}"
+                                        IsVisible="{Binding IsActive}"
+                                        FontSize="13"
+                                        FontFamily="OpenSansSemibold"
+                                        Padding="10,2"
+                                        HeightRequest="26"
+                                        MinimumHeightRequest="0"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{StaticResource ExpenseColor}"
+                                        BorderWidth="0" />
+                                <Button Text="Unban"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UnbanCommand}"
+                                        CommandParameter="{Binding .}"
+                                        IsVisible="{Binding IsBanned}"
+                                        FontSize="13"
+                                        FontFamily="OpenSansSemibold"
+                                        Padding="10,2"
+                                        HeightRequest="26"
+                                        MinimumHeightRequest="0"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{StaticResource IncomeColor}"
+                                        BorderWidth="0" />
+                                <Button Text="Delete"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                        CommandParameter="{Binding .}"
+                                        FontSize="13"
+                                        FontFamily="OpenSansSemibold"
+                                        Padding="10,2"
+                                        HeightRequest="26"
+                                        MinimumHeightRequest="0"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
+                                        BorderWidth="0" />
+                            </HorizontalStackLayout>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+
 </ContentPage>
