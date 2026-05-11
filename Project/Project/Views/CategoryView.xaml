@@ -63,6 +63,7 @@
                                          CornerRadius="6"
                                          VerticalOptions="Center"
                                          HorizontalOptions="Center"
+                                         BackgroundColor="Transparent"
                                          Color="{Binding Color, Converter={StaticResource HexColor}}" />
 
                                 <Label Grid.Column="1"
@@ -145,6 +146,7 @@
                                          CornerRadius="6"
                                          VerticalOptions="Center"
                                          HorizontalOptions="Center"
+                                         BackgroundColor="Transparent"
                                          Color="{Binding Color, Converter={StaticResource HexColor}}" />
 
                                 <Label Grid.Column="1"

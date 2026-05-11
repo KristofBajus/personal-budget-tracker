@@ -10,6 +10,7 @@
         <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     </ContentPage.Resources>
 
+    <Grid>
     <ScrollView>
         <VerticalStackLayout VerticalOptions="Center"
                              HorizontalOptions="Fill"
@@ -170,5 +171,29 @@
 
         </VerticalStackLayout>
     </ScrollView>
+
+    <!-- Theme toggle overlay (top-right corner) -->
+    <Border BackgroundColor="Transparent"
+            StrokeThickness="0"
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            Padding="0,35,35,0">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnToggleThemeClicked" />
+        </Border.GestureRecognizers>
+        <Grid WidthRequest="24" HeightRequest="24">
+            <mi:MauiIcon x:Name="ThemeLightIcon"
+                         Icon="{mi:Material Icon=LightMode}"
+                         IconSize="20"
+                         IconColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+            <mi:MauiIcon x:Name="ThemeDarkIcon"
+                         Icon="{mi:Material Icon=DarkMode}"
+                         IsVisible="False"
+                         IconSize="20"
+                         IconColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
+        </Grid>
+    </Border>
+
+    </Grid>
 
 </ContentPage>

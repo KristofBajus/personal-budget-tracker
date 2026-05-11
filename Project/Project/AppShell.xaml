@@ -2,8 +2,16 @@
 <Shell x:Class="Project.AppShell"
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+       xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
        xmlns:views="clr-namespace:Project.Views"
        FlyoutWidth="240">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </Shell.Resources>
 
     <!-- Sidebar header: app name + logged-in username -->
     <Shell.FlyoutHeader>
@@ -65,12 +73,39 @@
                       ContentTemplate="{DataTemplate views:UserManagementPage}" />
     </FlyoutItem>
 
-    <!-- Sidebar footer: logout button -->
+    <!-- Sidebar footer: theme toggle + logout -->
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="16,8,16,24">
             <BoxView HeightRequest="1"
                      Margin="0,0,0,8"
                      BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+
+            <!-- Theme toggle -->
+            <Border BackgroundColor="Transparent"
+                    StrokeThickness="0"
+                    Padding="0,0,0,8"
+                    HorizontalOptions="Start">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnToggleThemeClicked" />
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="8">
+                    <Grid WidthRequest="20" HeightRequest="20" VerticalOptions="Center">
+                        <mi:MauiIcon Icon="{mi:Material Icon=LightMode}"
+                                     IsVisible="{Binding IsDarkTheme, Converter={StaticResource InvertedBoolConverter}}"
+                                     IconSize="18"
+                                     IconColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                        <mi:MauiIcon Icon="{mi:Material Icon=DarkMode}"
+                                     IsVisible="{Binding IsDarkTheme}"
+                                     IconSize="18"
+                                     IconColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                    </Grid>
+                    <Label Text="{Binding ThemeLabel}"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                </HorizontalStackLayout>
+            </Border>
+
             <Button Text="Log Out"
                     Clicked="OnLogoutClicked"
                     BackgroundColor="Transparent"

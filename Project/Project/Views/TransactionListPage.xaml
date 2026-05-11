@@ -79,6 +79,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border StrokeShape="RoundRectangle 16"
+                            StrokeThickness="0"
                             BackgroundColor="{AppThemeBinding Light={StaticResource CardLight}, Dark={StaticResource CardDark}}"
                             Padding="12,10"
                             Margin="32,0,32,6">
@@ -91,6 +92,7 @@
                                      CornerRadius="6"
                                      VerticalOptions="Center"
                                      HorizontalOptions="Center"
+                                     BackgroundColor="Transparent"
                                      Color="{Binding CategoryColor, Converter={StaticResource HexColor}}" />
 
                             <!-- Category + note + date -->

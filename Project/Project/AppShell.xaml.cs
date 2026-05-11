@@ -19,11 +19,38 @@ public partial class AppShell : Shell
         _session = session;
         BindingContext = this;
         InitializeComponent();
+
+        Application.Current!.RequestedThemeChanged += (_, _) =>
+        {
+            OnPropertyChanged(nameof(IsDarkTheme));
+            OnPropertyChanged(nameof(ThemeLabel));
+        };
     }
 
     public bool IsAdmin => _session.CurrentUser?.Role == Role.Admin;
     public bool IsNotAdmin => !IsAdmin;
     public string CurrentUsername => _session.CurrentUser?.Username ?? string.Empty;
+
+    public bool IsDarkTheme
+    {
+        get
+        {
+            var app = Application.Current!;
+            var effective = app.UserAppTheme != AppTheme.Unspecified
+                ? app.UserAppTheme
+                : app.RequestedTheme;
+            return effective == AppTheme.Dark;
+        }
+    }
+
+    public string ThemeLabel => IsDarkTheme ? "Dark" : "Light";
+
+    private void OnToggleThemeClicked(object? sender, System.EventArgs e)
+    {
+        Application.Current!.UserAppTheme = IsDarkTheme ? AppTheme.Light : AppTheme.Dark;
+        OnPropertyChanged(nameof(IsDarkTheme));
+        OnPropertyChanged(nameof(ThemeLabel));
+    }
 
     private void OnLogoutClicked(object? sender, System.EventArgs e)
     {
