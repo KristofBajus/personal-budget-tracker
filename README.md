@@ -15,15 +15,16 @@ A personal finance management app built with .NET MAUI for the PB178 course at M
 ## Prerequisites
 
 - .NET 10 SDK
+- JetBrains Rider or Visual Studio 2022+ with MAUI workload
 
 > Developed and tested on macOS (Mac Catalyst) and iOS simulator. The UI is fully responsive and works on both platforms.
 
 ## How to run
 
 ```bash
-git clone <repo-url>
-cd Project
-open Project.sln          # opens in Visual Studio / Rider
+git clone https://gitlab.fi.muni.cz/xbajus1/pb-178.git
+cd pb-178/Project/Project
+open Project.sln          # or open in Rider / Visual Studio
 ```
 
 Then build and run the `Project` target (Mac Catalyst or iOS Simulator). No extra steps needed — on first launch the app automatically:
