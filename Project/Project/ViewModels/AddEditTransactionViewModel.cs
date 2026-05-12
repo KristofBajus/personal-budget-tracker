@@ -68,7 +68,11 @@ public partial class AddEditTransactionViewModel : BaseViewModel
     {
         SelectedCategory = null;
         ErrorMessage = string.Empty;
-        _ = LoadCategoriesAsync(value);
+        _ = LoadCategoriesAsync(value).ContinueWith(t =>
+        {
+            if (t.IsFaulted)
+                MainThread.BeginInvokeOnMainThread(() => ErrorMessage = "Failed to load categories.");
+        });
     }
 
     public async Task InitForAddAsync()

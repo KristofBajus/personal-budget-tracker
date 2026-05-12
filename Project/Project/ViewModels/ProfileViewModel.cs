@@ -116,8 +116,8 @@ public partial class ProfileViewModel : BaseViewModel
         try
         {
             await _profileService.UpdateUsernameAsync(_session.CurrentUser!.Id, NewUsername);
-            _session.CurrentUser.Username = NewUsername;
-            Username = NewUsername;
+            _session.SetUser(await _profileService.GetProfileAsync(_session.CurrentUser.Id));
+            Username = _session.CurrentUser.Username;
             NewUsername = string.Empty;
             UsernameSuccess = "Username updated successfully.";
         }
@@ -148,8 +148,8 @@ public partial class ProfileViewModel : BaseViewModel
         try
         {
             await _profileService.UpdateEmailAsync(_session.CurrentUser!.Id, NewEmail);
-            _session.CurrentUser.Email = NewEmail;
-            Email = NewEmail;
+            _session.SetUser(await _profileService.GetProfileAsync(_session.CurrentUser.Id));
+            Email = _session.CurrentUser.Email;
             NewEmail = string.Empty;
             EmailSuccess = "Email updated successfully.";
         }

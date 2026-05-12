@@ -50,27 +50,31 @@ public partial class DashboardViewModel : BaseViewModel
     {
         if (IsBusy) return;
         IsBusy = true;
+        try
+        {
+            var userId = _session.CurrentUser!.Id;
+            var now  = DateTime.UtcNow;
+            var last = now.AddMonths(-1);
 
-        var userId = _session.CurrentUser!.Id;
-        var now = DateTime.Now;
-        var last = now.AddMonths(-1);
+            var balanceTask     = _transactionService.GetBalanceAsync(userId);
+            var incomeNowTask   = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  now.Year,  now.Month);
+            var expenseNowTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, now.Year,  now.Month);
+            var incomeLastTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  last.Year, last.Month);
+            var expenseLastTask = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, last.Year, last.Month);
+            var recentTask      = _transactionService.GetRecentAsync(userId, 10);
 
-        var balanceTask      = _transactionService.GetBalanceAsync(userId);
-        var incomeNowTask    = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  now.Year,  now.Month);
-        var expenseNowTask   = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, now.Year,  now.Month);
-        var incomeLastTask   = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  last.Year, last.Month);
-        var expenseLastTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, last.Year, last.Month);
-        var recentTask       = _transactionService.GetRecentAsync(userId, 10);
+            await Task.WhenAll(balanceTask, incomeNowTask, expenseNowTask, incomeLastTask, expenseLastTask, recentTask);
 
-        await Task.WhenAll(balanceTask, incomeNowTask, expenseNowTask, incomeLastTask, expenseLastTask, recentTask);
-
-        Balance          = balanceTask.Result;
-        IncomeThisMonth  = incomeNowTask.Result;
-        ExpenseThisMonth = expenseNowTask.Result;
-        NetThisMonth     = incomeNowTask.Result  - expenseNowTask.Result;
-        NetLastMonth     = incomeLastTask.Result - expenseLastTask.Result;
-        RecentTransactions = new ObservableCollection<TransactionDto>(recentTask.Result);
-
-        IsBusy = false;
+            Balance          = balanceTask.Result;
+            IncomeThisMonth  = incomeNowTask.Result;
+            ExpenseThisMonth = expenseNowTask.Result;
+            NetThisMonth     = incomeNowTask.Result  - expenseNowTask.Result;
+            NetLastMonth     = incomeLastTask.Result - expenseLastTask.Result;
+            RecentTransactions = new ObservableCollection<TransactionDto>(recentTask.Result);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

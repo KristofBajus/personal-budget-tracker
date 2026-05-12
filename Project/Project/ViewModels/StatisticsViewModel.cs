@@ -83,10 +83,10 @@ public partial class StatisticsViewModel : BaseViewModel
 
     private DateTime GetFromDate() => SelectedTimeRange switch
     {
-        "Last 30 days"  => DateTime.Today.AddDays(-30),
-        "Last 3 months" => DateTime.Today.AddMonths(-3),
-        "Last 6 months" => DateTime.Today.AddMonths(-6),
-        "This year"     => new DateTime(DateTime.Today.Year, 1, 1),
+        "Last 30 days"  => DateTime.UtcNow.Date.AddDays(-30),
+        "Last 3 months" => DateTime.UtcNow.Date.AddMonths(-3),
+        "Last 6 months" => DateTime.UtcNow.Date.AddMonths(-6),
+        "This year"     => new DateTime(DateTime.UtcNow.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc),
         _               => DateTime.MinValue
     };
 
@@ -95,78 +95,82 @@ public partial class StatisticsViewModel : BaseViewModel
     {
         if (IsBusy) return;
         IsBusy = true;
+        try
+        {
+            var userId = _session.CurrentUser!.Id;
+            var from   = GetFromDate();
 
-        var userId = _session.CurrentUser!.Id;
-        var from   = GetFromDate();
+            var monthlyTask  = _statisticsService.GetMonthlyTotalsAsync(userId, from);
+            var categoryTask = _statisticsService.GetCategoryBreakdownAsync(userId, from);
+            var balanceTask  = _statisticsService.GetBalanceHistoryAsync(userId, from);
 
-        var monthlyTask  = _statisticsService.GetMonthlyTotalsAsync(userId, from);
-        var categoryTask = _statisticsService.GetCategoryBreakdownAsync(userId, from);
-        var balanceTask  = _statisticsService.GetBalanceHistoryAsync(userId, from);
+            await Task.WhenAll(monthlyTask, categoryTask, balanceTask);
 
-        await Task.WhenAll(monthlyTask, categoryTask, balanceTask);
+            var monthly = monthlyTask.Result;
+            var cats    = categoryTask.Result;
+            var balance = balanceTask.Result;
 
-        var monthly = monthlyTask.Result;
-        var cats    = categoryTask.Result;
-        var balance = balanceTask.Result;
+            // Summary
+            TotalIncome   = monthly.Sum(m => m.Income);
+            TotalExpenses = monthly.Sum(m => m.Expense);
+            NetAmount     = TotalIncome - TotalExpenses;
+            HasNoData     = monthly.Count == 0 && cats.Count == 0 && balance.Count == 0;
 
-        // Summary
-        TotalIncome   = monthly.Sum(m => m.Income);
-        TotalExpenses = monthly.Sum(m => m.Expense);
-        NetAmount     = TotalIncome - TotalExpenses;
-        HasNoData     = monthly.Count == 0 && cats.Count == 0 && balance.Count == 0;
+            // Bar chart
+            var monthLabels = monthly
+                .Select(m => CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(m.Month))
+                .ToArray();
 
-        // Bar chart
-        var monthLabels = monthly
-            .Select(m => CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(m.Month))
-            .ToArray();
+            BarSeries =
+            [
+                new ColumnSeries<double>
+                {
+                    Name   = "Income",
+                    Values = monthly.Select(m => (double)m.Income).ToArray(),
+                    Fill   = new SolidColorPaint(SKColor.Parse("#22C55E"))
+                },
+                new ColumnSeries<double>
+                {
+                    Name   = "Expense",
+                    Values = monthly.Select(m => (double)m.Expense).ToArray(),
+                    Fill   = new SolidColorPaint(SKColor.Parse("#EF4444"))
+                }
+            ];
+            BarXAxes = [new Axis { Labels = monthLabels }];
 
-        BarSeries =
-        [
-            new ColumnSeries<double>
+            // Pie chart
+            HasPieData = cats.Count > 0;
+            PieSeries = cats
+                .Select(c => (ISeries)new PieSeries<double>
+                {
+                    Name   = c.Name,
+                    Values = [(double)c.Total],
+                    Fill   = new SolidColorPaint(SKColor.Parse(c.Color))
+                })
+                .ToArray();
+
+            // Line chart
+            HasLineData = balance.Count > 0;
+            LineSeries =
+            [
+                new LineSeries<DateTimePoint>
+                {
+                    Name         = "Balance",
+                    Values       = balance.Select(b => new DateTimePoint(b.Date, (double)b.Balance)).ToArray(),
+                    Fill         = null,
+                    GeometrySize = 4,
+                    Stroke       = new SolidColorPaint(SKColor.Parse("#3B82F6")) { StrokeThickness = 2 }
+                }
+            ];
+            LineXAxes = [new DateTimeAxis(TimeSpan.FromDays(1), d => d.ToString("MMM dd"))
             {
-                Name   = "Income",
-                Values = monthly.Select(m => (double)m.Income).ToArray(),
-                Fill   = new SolidColorPaint(SKColor.Parse("#22C55E"))
-            },
-            new ColumnSeries<double>
-            {
-                Name   = "Expense",
-                Values = monthly.Select(m => (double)m.Expense).ToArray(),
-                Fill   = new SolidColorPaint(SKColor.Parse("#EF4444"))
-            }
-        ];
-        BarXAxes = [new Axis { Labels = monthLabels }];
-
-        // Pie chart
-        HasPieData = cats.Count > 0;
-        PieSeries = cats
-            .Select(c => (ISeries)new PieSeries<double>
-            {
-                Name   = c.Name,
-                Values = [(double)c.Total],
-                Fill   = new SolidColorPaint(SKColor.Parse(c.Color))
-            })
-            .ToArray();
-
-        // Line chart
-        HasLineData = balance.Count > 0;
-        LineSeries =
-        [
-            new LineSeries<DateTimePoint>
-            {
-                Name         = "Balance",
-                Values       = balance.Select(b => new DateTimePoint(b.Date, (double)b.Balance)).ToArray(),
-                Fill         = null,
-                GeometrySize = 4,
-                Stroke       = new SolidColorPaint(SKColor.Parse("#3B82F6")) { StrokeThickness = 2 }
-            }
-        ];
-        LineXAxes = [new DateTimeAxis(TimeSpan.FromDays(1), d => d.ToString("MMM dd"))
-    {
-        MinStep = TimeSpan.FromDays(14).Ticks,
-        LabelsRotation = -30
-    }];
-
-        IsBusy = false;
+                MinStep = TimeSpan.FromDays(14).Ticks,
+                LabelsRotation = -30
+            }];
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 }

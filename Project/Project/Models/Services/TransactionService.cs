@@ -109,7 +109,8 @@ public class TransactionService : ITransactionService
         _db.Transactions.Add(transaction);
         await _db.SaveChangesAsync();
 
-        var category = await _db.Categories.FindAsync(categoryId);
+        var category = await _db.Categories.FindAsync(categoryId)
+            ?? throw new InvalidOperationException($"Category {categoryId} not found after saving transaction.");
         return new TransactionDto
         {
             Id = transaction.Id,
@@ -118,7 +119,7 @@ public class TransactionService : ITransactionService
             Type = transaction.Type,
             Note = transaction.Note,
             CategoryId = categoryId,
-            CategoryName = category!.Name,
+            CategoryName = category.Name,
             CategoryColor = category.Color,
             CreatedAt = transaction.CreatedAt
         };

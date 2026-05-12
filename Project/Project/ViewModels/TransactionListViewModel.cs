@@ -52,7 +52,7 @@ public partial class TransactionListViewModel : BaseViewModel
     private static List<string> BuildYearOptions()
     {
         var years = new List<string> { "All years" };
-        var current = DateTime.Now.Year;
+        var current = DateTime.UtcNow.Year;
         for (var y = current; y >= current - 4; y--)
             years.Add(y.ToString());
         return years;
@@ -95,14 +95,20 @@ public partial class TransactionListViewModel : BaseViewModel
     {
         if (IsBusy) return;
         IsBusy = true;
-        _allTransactions = await _transactionService.GetFilteredAsync(
-            _session.CurrentUser!.Id,
-            MappedFilterType,
-            null,
-            MappedFilterMonth,
-            MappedFilterYear);
-        ApplyFilters();
-        IsBusy = false;
+        try
+        {
+            _allTransactions = await _transactionService.GetFilteredAsync(
+                _session.CurrentUser!.Id,
+                MappedFilterType,
+                null,
+                MappedFilterMonth,
+                MappedFilterYear);
+            ApplyFilters();
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     private void ApplyFilters()

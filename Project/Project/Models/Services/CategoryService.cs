@@ -55,8 +55,8 @@ public class CategoryService : ICategoryService
 
     public async Task UpdateAsync(int id, string name, string color)
     {
-        var category = await _db.Categories.FindAsync(id);
-        if (category is null) return;
+        var category = await _db.Categories.FindAsync(id)
+            ?? throw new InvalidOperationException("Category not found.");
         category.Name = name;
         category.Color = color;
         await _db.SaveChangesAsync();
@@ -64,9 +64,8 @@ public class CategoryService : ICategoryService
 
     public async Task DeleteAsync(int id)
     {
-        // soft delete
-        var category = await _db.Categories.FindAsync(id);
-        if (category is null) return;
+        var category = await _db.Categories.FindAsync(id)
+            ?? throw new InvalidOperationException("Category not found.");
         category.IsDeleted = true;
         category.DeletedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();

@@ -40,16 +40,16 @@ public class UserService : IUserService
 
     public async Task BanAsync(int userId)
     {
-        var user = await _db.Users.FindAsync(userId);
-        if (user is null) return;
+        var user = await _db.Users.FindAsync(userId)
+            ?? throw new InvalidOperationException("User not found.");
         user.IsBanned = true;
         await _db.SaveChangesAsync();
     }
 
     public async Task UnbanAsync(int userId)
     {
-        var user = await _db.Users.FindAsync(userId);
-        if (user is null) return;
+        var user = await _db.Users.FindAsync(userId)
+            ?? throw new InvalidOperationException("User not found.");
         user.IsBanned = false;
         await _db.SaveChangesAsync();
     }
@@ -58,8 +58,8 @@ public class UserService : IUserService
     {
         var user = await _db.Users
             .IgnoreQueryFilters()
-            .FirstOrDefaultAsync(u => u.Id == userId);
-        if (user is null) return;
+            .FirstOrDefaultAsync(u => u.Id == userId)
+            ?? throw new InvalidOperationException("User not found.");
         user.IsDeleted = true;
         user.DeletedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();
