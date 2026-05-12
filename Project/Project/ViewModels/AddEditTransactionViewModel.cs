@@ -68,11 +68,19 @@ public partial class AddEditTransactionViewModel : BaseViewModel
     {
         SelectedCategory = null;
         ErrorMessage = string.Empty;
-        _ = LoadCategoriesAsync(value).ContinueWith(t =>
+        _ = ReloadCategoriesAsync(value);
+    }
+
+    private async Task ReloadCategoriesAsync(TransactionType type)
+    {
+        try
         {
-            if (t.IsFaulted)
-                MainThread.BeginInvokeOnMainThread(() => ErrorMessage = "Failed to load categories.");
-        });
+            await LoadCategoriesAsync(type);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 
     public async Task InitForAddAsync()

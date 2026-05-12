@@ -86,9 +86,19 @@ public partial class TransactionListViewModel : BaseViewModel
         _         => null  // "All types" or null → no filter
     };
 
-    private int? MappedFilterMonth => FilterMonthName is null or "All months"
-        ? null
-        : MonthOptions.IndexOf(FilterMonthName); // "January" is index 1 after "All months", so IndexOf gives the correct month number
+    private static readonly string[] MonthNames =
+        ["January","February","March","April","May","June",
+         "July","August","September","October","November","December"];
+
+    private int? MappedFilterMonth
+    {
+        get
+        {
+            if (FilterMonthName is null or "All months") return null;
+            var idx = Array.IndexOf(MonthNames, FilterMonthName) + 1; // +1: January=1
+            return idx > 0 ? idx : null;
+        }
+    }
 
     [RelayCommand]
     public async Task LoadAsync()

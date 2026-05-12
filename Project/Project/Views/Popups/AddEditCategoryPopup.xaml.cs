@@ -24,7 +24,7 @@ public partial class AddEditCategoryPopup : Popup
         vm.PropertyChanged += async (_, e) =>
         {
             if (e.PropertyName == nameof(AddEditCategoryViewModel.SaveSucceeded) && vm.SaveSucceeded)
-                await CloseAsync();
+                try { await CloseAsync(); } catch { /* popup already closed */ }
         };
     }
 

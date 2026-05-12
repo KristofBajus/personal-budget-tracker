@@ -53,14 +53,14 @@ public partial class DashboardViewModel : BaseViewModel
         try
         {
             var userId = _session.CurrentUser!.Id;
-            var now  = DateTime.UtcNow;
-            var last = now.AddMonths(-1);
+            var now           = DateTime.UtcNow;
+            var previousMonth = now.AddMonths(-1);
 
             var balanceTask     = _transactionService.GetBalanceAsync(userId);
-            var incomeNowTask   = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  now.Year,  now.Month);
-            var expenseNowTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, now.Year,  now.Month);
-            var incomeLastTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  last.Year, last.Month);
-            var expenseLastTask = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, last.Year, last.Month);
+            var incomeNowTask   = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  now.Year,           now.Month);
+            var expenseNowTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, now.Year,           now.Month);
+            var incomeLastTask  = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Income,  previousMonth.Year, previousMonth.Month);
+            var expenseLastTask = _transactionService.GetMonthlyTotalAsync(userId, TransactionType.Expense, previousMonth.Year, previousMonth.Month);
             var recentTask      = _transactionService.GetRecentAsync(userId, 10);
 
             await Task.WhenAll(balanceTask, incomeNowTask, expenseNowTask, incomeLastTask, expenseLastTask, recentTask);

@@ -25,22 +25,26 @@ public partial class CategoryViewModel : BaseViewModel
     }
 
     [ObservableProperty]
-    public partial ObservableCollection<CategoryDto> IncomeCategories { get; set; } = [];
+    public partial ObservableCollection<CategoryDto> IncomeCategories { get; private set; } = [];
 
     [ObservableProperty]
-    public partial ObservableCollection<CategoryDto> ExpenseCategories { get; set; } = [];
+    public partial ObservableCollection<CategoryDto> ExpenseCategories { get; private set; } = [];
 
     [RelayCommand]
     public async Task LoadAsync()
     {
         if (IsBusy) return;
         IsBusy = true;
-
-        var all = await _categoryService.GetAllAsync(_session.CurrentUser!.Id);
-        IncomeCategories  = new ObservableCollection<CategoryDto>(all.Where(c => c.Type == DAL.Enums.TransactionType.Income));
-        ExpenseCategories = new ObservableCollection<CategoryDto>(all.Where(c => c.Type == DAL.Enums.TransactionType.Expense));
-
-        IsBusy = false;
+        try
+        {
+            var all = await _categoryService.GetAllAsync(_session.CurrentUser!.Id);
+            IncomeCategories  = new ObservableCollection<CategoryDto>(all.Where(c => c.Type == DAL.Enums.TransactionType.Income));
+            ExpenseCategories = new ObservableCollection<CategoryDto>(all.Where(c => c.Type == DAL.Enums.TransactionType.Expense));
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     [RelayCommand]

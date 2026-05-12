@@ -127,8 +127,8 @@ public class TransactionService : ITransactionService
 
     public async Task UpdateAsync(int id, decimal amount, DateTime date, TransactionType type, int categoryId, string? note)
     {
-        var transaction = await _db.Transactions.FindAsync(id);
-        if (transaction is null) return;
+        var transaction = await _db.Transactions.FindAsync(id)
+            ?? throw new InvalidOperationException("Transaction not found.");
 
         transaction.Amount = amount;
         transaction.Date = date;
@@ -140,8 +140,8 @@ public class TransactionService : ITransactionService
 
     public async Task DeleteAsync(int id)
     {
-        var transaction = await _db.Transactions.FindAsync(id);
-        if (transaction is null) return;
+        var transaction = await _db.Transactions.FindAsync(id)
+            ?? throw new InvalidOperationException("Transaction not found.");
 
         transaction.IsDeleted = true;
         transaction.DeletedAt = DateTime.UtcNow;

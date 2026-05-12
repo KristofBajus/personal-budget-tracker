@@ -14,7 +14,7 @@ public partial class AddEditTransactionPopup : Popup
         vm.PropertyChanged += async (s, e) =>
         {
             if (e.PropertyName == nameof(AddEditTransactionViewModel.SaveSucceeded) && vm.SaveSucceeded)
-                await CloseAsync();
+                try { await CloseAsync(); } catch { /* popup already closed */ }
         };
     }
 
