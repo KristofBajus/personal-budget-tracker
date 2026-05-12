@@ -38,22 +38,22 @@ public partial class AddEditCategoryPopup : Popup
             // Outer border = selection ring
             var ring = new Border
             {
-                StrokeShape = new RoundRectangle { CornerRadius = 24 },
+                StrokeShape = new RoundRectangle { CornerRadius = 16 },
                 StrokeThickness = 0,
                 BackgroundColor = Colors.Transparent,
-                Padding = new Thickness(3),
-                Margin = new Thickness(4),
-                WidthRequest = 48,
-                HeightRequest = 48
+                Padding = new Thickness(2),
+                Margin = new Thickness(3),
+                WidthRequest = 34,
+                HeightRequest = 34
             };
 
             // Inner circle = the color
             var circle = new Button
             {
                 BackgroundColor = Color.FromArgb(hex),
-                CornerRadius = 20,
-                WidthRequest = 40,
-                HeightRequest = 40,
+                CornerRadius = 13,
+                WidthRequest = 26,
+                HeightRequest = 26,
                 MinimumWidthRequest = 0,
                 MinimumHeightRequest = 0,
                 Padding = new Thickness(0),
@@ -83,7 +83,7 @@ public partial class AddEditCategoryPopup : Popup
             {
                 ring.Stroke = new SolidColorBrush(Color.FromArgb(_vm.SelectedColor));
                 ring.StrokeThickness = 3;
-                ring.BackgroundColor = Color.FromArgb(hex).WithAlpha(0.25f);
+                ring.BackgroundColor = Color.FromArgb(hex).WithAlpha(0.20f);
             }
             else
             {

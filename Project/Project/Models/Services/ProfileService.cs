@@ -63,10 +63,11 @@ public class ProfileService : IProfileService
         var user = await _db.Users.FindAsync(userId)
             ?? throw new InvalidOperationException("User not found.");
 
-        if (!BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash))
+        var valid = await Task.Run(() => BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash));
+        if (!valid)
             throw new InvalidOperationException("Current password is incorrect.");
 
-        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+        user.PasswordHash = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword(newPassword));
         await _db.SaveChangesAsync();
     }
 }

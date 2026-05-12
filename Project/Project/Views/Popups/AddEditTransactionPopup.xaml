@@ -4,16 +4,19 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="Project.Views.Popups.AddEditTransactionPopup"
                CanBeDismissedByTappingOutsideOfPopup="False"
-               HorizontalOptions="Fill">
+               HorizontalOptions="Fill"
+               VerticalOptions="Center"
+               BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource SurfaceDark}}">
 
     <Border StrokeShape="RoundRectangle 20"
             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-            WidthRequest="400"
-            Margin="20"
-            Padding="28,24">
+            HorizontalOptions="Fill"
+            MinimumWidthRequest="250"
+            Margin="6"
+            Padding="20,16">
 
-        <ScrollView MaximumHeightRequest="700">
-        <VerticalStackLayout Spacing="16">
+        <ScrollView>
+        <VerticalStackLayout Spacing="10">
 
             <!-- Title -->
             <Label Text="{Binding PopupTitle}"
@@ -21,7 +24,7 @@
                    FontAttributes="Bold" />
 
             <!-- Type -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Type" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <Border StrokeShape="RoundRectangle 20"
@@ -33,7 +36,7 @@
             </VerticalStackLayout>
 
             <!-- Amount -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Amount" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <Border StrokeShape="RoundRectangle 20"
@@ -47,7 +50,7 @@
             </VerticalStackLayout>
 
             <!-- Date -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Date" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <DatePicker Date="{Binding Date}"
@@ -55,7 +58,7 @@
             </VerticalStackLayout>
 
             <!-- Category -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Category" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <Border StrokeShape="RoundRectangle 20"
@@ -68,7 +71,7 @@
             </VerticalStackLayout>
 
             <!-- Note -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Note (optional)" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <Border StrokeShape="RoundRectangle 20"

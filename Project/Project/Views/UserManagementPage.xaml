@@ -87,13 +87,13 @@
                             <!-- Username + email + joined -->
                             <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{Binding Username, StringFormat='@{0}'}"
-                                       FontSize="14"
+                                       FontSize="16"
                                        FontAttributes="Bold" />
                                 <Label Text="{Binding Email}"
-                                       FontSize="12"
+                                       FontSize="14"
                                        TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
                                 <Label Text="{Binding CreatedAt, StringFormat='Joined {0:dd MMM yyyy}'}"
-                                       FontSize="11"
+                                       FontSize="15"
                                        TextColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
                             </VerticalStackLayout>
 
@@ -115,7 +115,7 @@
                                     </DataTrigger>
                                 </Border.Triggers>
                                 <Label Text="{Binding StatusText}"
-                                       FontSize="11"
+                                       FontSize="15"
                                        FontAttributes="Bold">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding StatusText}" Value="Active">
@@ -140,7 +140,7 @@
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.BanCommand}"
                                         CommandParameter="{Binding .}"
                                         IsVisible="{Binding IsActive}"
-                                        FontSize="13"
+                                        FontSize="15"
                                         FontFamily="OpenSansSemibold"
                                         Padding="10,2"
                                         HeightRequest="26"
@@ -152,7 +152,7 @@
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UnbanCommand}"
                                         CommandParameter="{Binding .}"
                                         IsVisible="{Binding IsBanned}"
-                                        FontSize="13"
+                                        FontSize="15"
                                         FontFamily="OpenSansSemibold"
                                         Padding="10,2"
                                         HeightRequest="26"
@@ -163,7 +163,7 @@
                                 <Button Text="Delete"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
                                         CommandParameter="{Binding .}"
-                                        FontSize="13"
+                                        FontSize="15"
                                         FontFamily="OpenSansSemibold"
                                         Padding="10,2"
                                         HeightRequest="26"
@@ -179,6 +179,13 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
+
+        <ActivityIndicator Grid.RowSpan="2"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="{StaticResource Primary}" />
 
     </Grid>
 

@@ -30,6 +30,13 @@ public partial class TransactionListViewModel : BaseViewModel
     [ObservableProperty]
     public partial ObservableCollection<TransactionDto> Transactions { get; set; } = [];
 
+    [ObservableProperty]
+    public partial string SearchText { get; set; } = string.Empty;
+
+    partial void OnSearchTextChanged(string value) => ApplyFilters();
+
+    private List<TransactionDto> _allTransactions = [];
+
     // --- Picker sources ---
     public List<string> TypeOptions { get; } = ["All types", "Income", "Expense"];
 
@@ -88,16 +95,27 @@ public partial class TransactionListViewModel : BaseViewModel
     {
         if (IsBusy) return;
         IsBusy = true;
-        var results = await _transactionService.GetFilteredAsync(
+        _allTransactions = await _transactionService.GetFilteredAsync(
             _session.CurrentUser!.Id,
             MappedFilterType,
             null,
             MappedFilterMonth,
             MappedFilterYear);
-        Transactions.Clear();
-        foreach (var item in results)
-            Transactions.Add(item);
+        ApplyFilters();
         IsBusy = false;
+    }
+
+    private void ApplyFilters()
+    {
+        var filtered = _allTransactions.AsEnumerable();
+        if (!string.IsNullOrWhiteSpace(SearchText))
+            filtered = filtered.Where(t =>
+                (t.Note?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                t.CategoryName.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+
+        Transactions.Clear();
+        foreach (var item in filtered)
+            Transactions.Add(item);
     }
 
     [RelayCommand]

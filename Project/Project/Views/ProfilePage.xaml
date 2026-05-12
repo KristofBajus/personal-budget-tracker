@@ -10,6 +10,7 @@
         <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     </ContentPage.Resources>
 
+    <Grid>
     <ScrollView>
         <FlexLayout Wrap="Wrap"
                     Direction="Row"
@@ -235,5 +236,12 @@
 
         </FlexLayout>
     </ScrollView>
+
+    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                       IsVisible="{Binding IsBusy}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Color="{StaticResource Primary}" />
+    </Grid>
 
 </ContentPage>

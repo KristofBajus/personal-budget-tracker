@@ -4,7 +4,9 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="Project.Views.Popups.AddEditCategoryPopup"
                CanBeDismissedByTappingOutsideOfPopup="False"
-               HorizontalOptions="Fill">
+               HorizontalOptions="Fill"
+               VerticalOptions="Center"
+               BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource SurfaceDark}}">
 
     <toolkit:Popup.Resources>
         <toolkit:InvertedBoolConverter x:Key="InvertBool" />
@@ -12,12 +14,13 @@
 
     <Border StrokeShape="RoundRectangle 20"
             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-            WidthRequest="400"
-            Margin="20"
-            Padding="28,24">
+            HorizontalOptions="Fill"
+            MinimumWidthRequest="250"
+            Margin="6"
+            Padding="20,16">
 
-        <ScrollView MaximumHeightRequest="700">
-        <VerticalStackLayout Spacing="16">
+        <ScrollView>
+        <VerticalStackLayout Spacing="10">
 
             <!-- Title -->
             <Label Text="{Binding PopupTitle}"
@@ -25,7 +28,7 @@
                    FontAttributes="Bold" />
 
             <!-- Name -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Name" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <Border StrokeShape="RoundRectangle 20"
@@ -38,7 +41,7 @@
             </VerticalStackLayout>
 
             <!-- Type -->
-            <VerticalStackLayout Spacing="6">
+            <VerticalStackLayout Spacing="4">
                 <Label Text="Type" FontSize="13"
                        TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                 <Border StrokeShape="RoundRectangle 20"

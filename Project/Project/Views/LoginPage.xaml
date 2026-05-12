@@ -25,7 +25,7 @@
                    Margin="0,0,0,6" />
 
             <Label Text="Personal finance made simple"
-                   FontSize="13"
+                   FontSize="15"
                    HorizontalOptions="Center"
                    TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"
                    Margin="0,0,0,32" />
@@ -42,7 +42,7 @@
 
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Username"
-                               FontSize="13"
+                               FontSize="15"
                                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                         <Border StrokeShape="RoundRectangle 20"
                                 Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
@@ -55,7 +55,7 @@
 
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Password"
-                               FontSize="13"
+                               FontSize="15"
                                TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
                         <Border StrokeShape="RoundRectangle 20"
                                 Stroke="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"
@@ -90,7 +90,7 @@
 
                     <Label Text="{Binding ErrorMessage}"
                            TextColor="{StaticResource ExpenseColor}"
-                           FontSize="13"
+                           FontSize="15"
                            LineBreakMode="WordWrap"
                            HorizontalOptions="Fill"
                            IsVisible="{Binding HasError}" />
@@ -104,13 +104,13 @@
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
                         <Label Text="Don't have an account?"
                                VerticalOptions="Center"
-                               FontSize="13"
+                               FontSize="15"
                                TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
                         <Button Text="Register"
                                 Command="{Binding GoToRegisterCommand}"
                                 BackgroundColor="Transparent"
                                 TextColor="{StaticResource Primary}"
-                                FontSize="13"
+                                FontSize="15"
                                 FontAttributes="Bold"
                                 Padding="0" />
                     </HorizontalStackLayout>
@@ -142,6 +142,12 @@
                          IconColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}" />
         </Grid>
     </Border>
+
+    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                       IsVisible="{Binding IsBusy}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Color="{StaticResource Primary}" />
 
     </Grid>
 

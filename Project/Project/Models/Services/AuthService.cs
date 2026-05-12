@@ -34,7 +34,7 @@ public class AuthService : IAuthService
         {
             Username = username,
             Email = email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+            PasswordHash = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword(password)),
             Currency = currency,
             CreatedAt = DateTime.UtcNow
         };
@@ -63,7 +63,8 @@ public class AuthService : IAuthService
         if (user.IsBanned)
             throw new AccountBannedException();
 
-        if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+        var valid = await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.PasswordHash));
+        if (!valid)
             return null;
 
         var dto = ToDto(user);
