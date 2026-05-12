@@ -2,10 +2,10 @@ namespace Project.Models.Entities;
 
 public class SystemStatsDto
 {
-    public int TotalUsers { get; set; }
-    public int ActiveUsers { get; set; }
-    public int BannedUsers { get; set; }
-    public int DeletedUsers { get; set; }
-    public int TotalTransactions { get; set; }
-    public int NewUsersThisMonth { get; set; }
+    public int TotalUsers { get; init; }
+    public int ActiveUsers { get; init; }
+    public int BannedUsers { get; init; }
+    public int DeletedUsers { get; init; }
+    public int TotalTransactions { get; init; }
+    public int NewUsersThisMonth { get; init; }
 }

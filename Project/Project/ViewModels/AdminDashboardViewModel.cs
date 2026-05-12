@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Project.Models.Services.Interfaces;
-using Project.ViewModels;
 
 namespace Project.ViewModels;
 
