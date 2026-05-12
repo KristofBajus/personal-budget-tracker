@@ -4,7 +4,7 @@ A personal finance management app built with .NET MAUI for the PB178 course at M
 
 ## Tech stack
 
-- **.NET 9 MAUI** — Mac Catalyst
+- **.NET 10 MAUI** — Mac Catalyst + iOS
 - **SQLite + EF Core** — local database with migrations
 - **CommunityToolkit.Mvvm** — MVVM pattern (`[ObservableProperty]`, `[RelayCommand]`)
 - **CommunityToolkit.Maui** — converters, popups
@@ -14,9 +14,9 @@ A personal finance management app built with .NET MAUI for the PB178 course at M
 
 ## Prerequisites
 
-- .NET 9 SDK
+- .NET 10 SDK
 
-> This app was primarily developed and tested on macOS (Mac Catalyst desktop target). The UI is responsive and also runs on iPhone (tested on iOS simulator).
+> Developed and tested on macOS (Mac Catalyst) and iOS simulator. The UI is fully responsive and works on both platforms.
 
 ## How to run
 
@@ -26,7 +26,7 @@ cd Project
 open Project.sln          # opens in Visual Studio / Rider
 ```
 
-Then build and run the `Project` target (Mac Catalyst). No extra steps needed — on first launch the app automatically:
+Then build and run the `Project` target (Mac Catalyst or iOS Simulator). No extra steps needed — on first launch the app automatically:
 1. Creates the SQLite database
 2. Runs all EF Core migrations
 3. Seeds the admin user and all demo accounts with sample data
