@@ -23,6 +23,10 @@ public static class MauiProgram
     {
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveNativeBorder", (handler, _) =>
         {
+#if ANDROID
+            handler.PlatformView.BackgroundTintList =
+                Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
 #if IOS || MACCATALYST
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
             handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
@@ -32,6 +36,10 @@ public static class MauiProgram
 
         Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping("RemoveNativeBorder", (handler, _) =>
         {
+#if ANDROID
+            handler.PlatformView.BackgroundTintList =
+                Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
 #if IOS || MACCATALYST
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
             handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
