@@ -58,6 +58,7 @@ public partial class UserManagementViewModel : BaseViewModel
     [RelayCommand]
     private async Task BanAsync(UserDto user)
     {
+        if (user.Id == _session.CurrentUser?.Id) return;
         var confirmed = await Shell.Current.DisplayAlert(
             "Ban User",
             $"Are you sure you want to ban @{user.Username}?",

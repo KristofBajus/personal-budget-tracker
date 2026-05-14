@@ -49,7 +49,7 @@ public partial class AddEditTransactionViewModel : BaseViewModel
     public partial string AmountText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial DateTime Date { get; set; } = DateTime.Today;
+    public partial DateTime Date { get; set; } = DateTime.UtcNow.Date;
 
     [ObservableProperty]
     public partial TransactionType SelectedType { get; set; } = TransactionType.Expense;
@@ -87,7 +87,7 @@ public partial class AddEditTransactionViewModel : BaseViewModel
     {
         EditingId = null;
         AmountText = string.Empty;
-        Date = DateTime.Today;
+        Date = DateTime.UtcNow.Date;
         SelectedType = TransactionType.Expense;
         Note = string.Empty;
         ErrorMessage = string.Empty;

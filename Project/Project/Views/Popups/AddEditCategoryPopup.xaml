@@ -78,7 +78,8 @@
                         TextColor="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource White}}" />
                 <Button Grid.Column="1"
                         Text="Save"
-                        Command="{Binding SaveCommand}" />
+                        Command="{Binding SaveCommand}"
+                        IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBool}}" />
             </Grid>
 
         </VerticalStackLayout>
