@@ -96,14 +96,3 @@ All accounts are seeded automatically on first launch.
 **Shows:** empty states on Dashboard, Transactions, and Statistics pages.
 
 ---
-
-## Presentation scenarios
-
-| What to show | Account | Path |
-|---|---|---|
-| Full financial overview | `demo` | Dashboard → Transactions → Statistics |
-| Different currency | `student` | Dashboard → Transactions |
-| Empty states | `empty` | Dashboard → Transactions → Statistics |
-| Admin features | `admin` | Admin Overview → User Management |
-| Theme switching | any | Tap sun/moon icon in sidebar |
-| Profile editing | `demo` | Profile → update fields |
