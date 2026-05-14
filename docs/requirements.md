@@ -43,10 +43,6 @@
 - Running balance over time (line chart)
 - This month vs last month summary card (numbers only)
 
-### Import / Export
-- User can export their transactions to a CSV file
-- User can import transactions from a CSV file
-
 ### Profile
 - User can view their own profile (username, email, currency, joined date)
 - User can edit their username and email
@@ -72,5 +68,5 @@
 - All entities store CreatedAt timestamp; soft-deleted entities also store DeletedAt
 - Strict MVVM — no business logic in Views or code-behind files
 - Session state is managed via a singleton SessionService injected through DI
-- Application is designed for desktop (Windows) but layout is responsive
+- Application is designed for Mac Catalyst and iOS; layout is responsive
 - README contains all information needed to build and run the application

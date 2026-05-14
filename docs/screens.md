@@ -73,7 +73,6 @@ Login and Register pages are shown before the Shell — user cannot access the f
 **Behavior:**
 - All data scoped to the logged-in user
 - Balance and cards update when transactions change
-- Clicking a transaction in the recent list opens the Edit popup
 
 ---
 
@@ -84,7 +83,7 @@ Login and Register pages are shown before the Shell — user cannot access the f
 **Layout:** Filter bar at top, scrollable transaction list below.
 
 **Elements:**
-- Filter bar: Type dropdown (All/Income/Expense), Category dropdown, Month picker, Year picker, Clear filters button
+- Filter bar: Type dropdown (All/Income/Expense), Month picker, Year picker
 - Transaction list rows: date, category icon/color, note preview, amount (green for income, red for expense)
 - Add Transaction button (floating or top-right)
 - Edit and Delete buttons per row (or on row click)

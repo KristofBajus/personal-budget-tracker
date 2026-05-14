@@ -2,7 +2,7 @@
 
 ## .NET MAUI
 **Used for:** The entire UI layer — pages, layouts, controls, navigation.
-**Why:** Cross-platform desktop framework for C#. Allows building a native Windows desktop app while keeping the option to target other platforms. Shell provides built-in navigation with a left-side flyout.
+**Why:** Cross-platform framework for C#. Allows building native Mac Catalyst and iOS apps while keeping the option to target other platforms. Shell provides built-in navigation with a left-side flyout.
 
 ## Entity Framework Core (EF Core) + SQLite
 **Used for:** All database access — defining models, running migrations, querying and persisting data.
@@ -12,7 +12,7 @@
 - `Microsoft.EntityFrameworkCore.Sqlite`
 - `Microsoft.EntityFrameworkCore.Tools` (migrations)
 
-## Separate DAL Class Library (`BudgetTracker.DAL`)
+## Separate DAL Class Library (`DAL`)
 **Used for:** Isolating all database concerns — EF entities, DbContext, migrations, and seed data.
 **Why:** Keeps the MAUI project clean. MAUI only works with DTOs and Services, never with EF entities directly. This separation also makes the data layer independently testable.
 
@@ -29,7 +29,7 @@
 **Why:** BCrypt is a well-established, slow hashing algorithm designed for passwords. It automatically handles salting and is resistant to brute-force attacks. Passwords are never stored or compared in plain text.
 **NuGet package:** `BCrypt.Net-Next`
 
-## LiveCharts2 (or Microcharts)
+## LiveCharts2
 **Used for:** Rendering charts on the Statistics page — bar chart, pie/donut chart, line chart.
 **Why:** MAUI has no built-in charting. LiveCharts2 has MAUI support and covers all three chart types needed.
 **NuGet package:** `LiveChartsCore.SkiaSharpView.Maui`
