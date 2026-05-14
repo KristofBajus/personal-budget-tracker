@@ -94,8 +94,16 @@ public partial class UserManagementViewModel : BaseViewModel
 
     private async Task ReloadAsync()
     {
-        _allUsers = await _userService.GetAllAsync();
-        ApplyFilters();
+        IsBusy = true;
+        try
+        {
+            _allUsers = await _userService.GetAllAsync();
+            ApplyFilters();
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     private void ApplyFilters()

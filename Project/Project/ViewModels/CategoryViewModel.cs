@@ -104,7 +104,15 @@ public partial class CategoryViewModel : BaseViewModel
 
         if (!confirmed) return;
 
-        await _categoryService.DeleteAsync(dto.Id);
+        IsBusy = true;
+        try
+        {
+            await _categoryService.DeleteAsync(dto.Id);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
         await LoadAsync();
     }
 }

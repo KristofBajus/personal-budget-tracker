@@ -170,7 +170,15 @@ public partial class TransactionListViewModel : BaseViewModel
 
         if (!confirmed) return;
 
-        await _transactionService.DeleteAsync(dto.Id);
+        IsBusy = true;
+        try
+        {
+            await _transactionService.DeleteAsync(dto.Id);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
         await LoadAsync();
     }
 }
