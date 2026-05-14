@@ -115,6 +115,7 @@ public partial class ProfileViewModel : BaseViewModel
 
         try
         {
+            IsBusy = true;
             await _profileService.UpdateUsernameAsync(_session.CurrentUser!.Id, NewUsername);
             _session.SetUser(await _profileService.GetProfileAsync(_session.CurrentUser.Id));
             Username = _session.CurrentUser.Username;
@@ -124,6 +125,10 @@ public partial class ProfileViewModel : BaseViewModel
         catch (InvalidOperationException ex)
         {
             UsernameError = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
@@ -147,6 +152,7 @@ public partial class ProfileViewModel : BaseViewModel
 
         try
         {
+            IsBusy = true;
             await _profileService.UpdateEmailAsync(_session.CurrentUser!.Id, NewEmail);
             _session.SetUser(await _profileService.GetProfileAsync(_session.CurrentUser.Id));
             Email = _session.CurrentUser.Email;
@@ -156,6 +162,10 @@ public partial class ProfileViewModel : BaseViewModel
         catch (InvalidOperationException ex)
         {
             EmailError = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
@@ -188,6 +198,7 @@ public partial class ProfileViewModel : BaseViewModel
 
         try
         {
+            IsBusy = true;
             await _profileService.ChangePasswordAsync(_session.CurrentUser!.Id, CurrentPassword, NewPassword);
             CurrentPassword = string.Empty;
             NewPassword = string.Empty;
@@ -197,6 +208,10 @@ public partial class ProfileViewModel : BaseViewModel
         catch (InvalidOperationException ex)
         {
             PasswordError = ex.Message;
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
