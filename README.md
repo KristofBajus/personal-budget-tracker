@@ -63,6 +63,36 @@ Then build and run the `Project` target (Mac Catalyst or iOS Simulator). No extr
 - **Theme** — Light/Dark toggle in sidebar; follows OS on launch, manual override per session
 - **Admin panel** — system stats overview, user management with search/filter, ban/unban/delete actions
 
+## Project Structure
+
+```
+personal-budget-tracker/
+├── Project/
+│   ├── DAL/                          # Data Access Layer (.NET class library)
+│   │   ├── Entities/                 # EF Core entity models (User, Transaction, Category)
+│   │   ├── Enums/                    # Role, TransactionType
+│   │   ├── Migrations/               # EF Core database migrations
+│   │   └── AppDbContext.cs           # DbContext with soft-delete query filters
+│   └── Project/                      # .NET MAUI application
+│       ├── Models/
+│       │   ├── Entities/             # DTOs passed between services and ViewModels
+│       │   ├── Exceptions/           # Custom exceptions (AccountBannedException)
+│       │   └── Services/             # Business logic + service interfaces
+│       ├── ViewModels/               # MVVM ViewModels (CommunityToolkit.Mvvm)
+│       ├── Views/                    # XAML pages
+│       │   └── Popups/               # Add/Edit transaction and category popups
+│       ├── Converters/               # HexColorConverter
+│       ├── Resources/Styles/         # Colors.xaml, Styles.xaml (light/dark theme)
+│       ├── Platforms/                # Platform entry points (iOS, Mac Catalyst)
+│       ├── AppShell.xaml             # Shell navigation with role-based flyout
+│       └── MauiProgram.cs            # DI registration, DB migration, seeding
+├── docs/                             # Technical documentation
+│   ├── requirements.md
+│   ├── screens.md
+│   └── tech-stack.md
+└── assets/                           # Screenshots
+```
+
 ---
 
 ## Docs
