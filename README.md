@@ -1,6 +1,6 @@
 # Personal Budget Tracker
 
-A personal finance management app built with .NET MAUI for the PB178 course at Masaryk University. Tracks income and expenses, visualizes spending with charts, and includes an admin panel for user management.
+A personal finance management app built with .NET MAUI. Tracks income and expenses, visualizes spending with charts, and includes an admin panel for user management.
 
 ## Screenshots
 
