@@ -65,6 +65,14 @@ Then build and run the `Project` target (Mac Catalyst or iOS Simulator). No extr
 
 ---
 
+## Docs
+
+- [Tech stack & decisions](docs/tech-stack.md)
+- [Requirements](docs/requirements.md)
+- [Screens](docs/screens.md)
+
+---
+
 ## Demo accounts
 
 All accounts are seeded automatically on first launch.
