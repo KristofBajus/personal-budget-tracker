@@ -2,6 +2,26 @@
 
 A personal finance management app built with .NET MAUI for the PB178 course at Masaryk University. Tracks income and expenses, visualizes spending with charts, and includes an admin panel for user management.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="assets/dashboard.png" alt="Dashboard" width="100%"/></td>
+    <td><img src="assets/transactions.png" alt="Transactions" width="100%"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/statistics.png" alt="Statistics" width="100%"/></td>
+    <td><img src="assets/categories.png" alt="Categories" width="100%"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/admin.png" alt="Admin panel" width="100%"/></td>
+    <td>
+      <img src="assets/dashboard-mobile.png" alt="Dashboard (iOS)" width="48%"/>
+      <img src="assets/statistics-mobile.png" alt="Statistics (iOS)" width="48%"/>
+    </td>
+  </tr>
+</table>
+
 ## Tech stack
 
 - **.NET 10 MAUI** — Mac Catalyst + iOS
