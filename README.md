@@ -22,8 +22,8 @@ A personal finance management app built with .NET MAUI for the PB178 course at M
 ## How to run
 
 ```bash
-git clone https://gitlab.fi.muni.cz/xbajus1/pb-178.git
-cd pb-178/Project/Project
+git clone https://github.com/KristofBajus/personal-budget-tracker.git
+cd personal-budget-tracker/Project
 open Project.sln          # or open in Rider / Visual Studio
 ```
 
